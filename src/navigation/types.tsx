@@ -3,11 +3,9 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeScreenProps,
-  NavigationProp,
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { IPost } from "../interface/post";
 
 export enum NavigationRoutes {
   Root = "Root",
@@ -16,6 +14,7 @@ export enum NavigationRoutes {
   RootNavigator = "RootStackNavigator",
   HomeScreen = "HomeScreen",
   ProfileScreen = "ProfileScreen",
+  TestSheet = "TestSheet",
 }
 
 export type RootStackParamList = {
@@ -31,7 +30,7 @@ export type RootTabParamList = {
 
 export type BottomSheetParamList = {
   RootNavigator: undefined;
-  CommentSheet: { id: string; userId: string; payload: IPost };
+  TestSheet: undefined;
 };
 
 // export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;

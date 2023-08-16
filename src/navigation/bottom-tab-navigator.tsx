@@ -2,8 +2,8 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationRoutes, RootTabParamList } from "./types";
 
-import { HomeScreen } from "../screens/article/home-screen";
 import { ProfileScreen } from "../screens/profile/profile";
+import { HomeScreen } from "../screens/home/home";
 
 const BottomTabNavigator = () => {
   const BottomTab = createBottomTabNavigator<RootTabParamList>();

@@ -8,7 +8,7 @@ import {
   BottomSheetBackdropProps,
 } from "@gorhom/bottom-sheet";
 
-import { CommentSheet } from "../sheets/comment";
+import { TestSheet } from "../sheets/test";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -33,8 +33,8 @@ const BottomSheetNavigator = () => {
     <Navigator>
       <Screen component={RootNavigator} name="RootNavigator" />
       <Screen
-        component={CommentSheet}
-        name={NavigationRoutes.CommentSheet}
+        component={TestSheet}
+        name={NavigationRoutes.TestSheet}
         options={{
           backdropComponent: renderBackdrop,
           snapPoints: [220],
