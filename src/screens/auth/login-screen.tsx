@@ -6,10 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Text,
 } from "react-native";
 import React, { memo } from "react";
 import { Image } from "expo-image";
-import { MonBold, MonMedium, MonSemiBold } from "../../widgets/styled-text";
 import LoginForm, { IFormData } from "../../components/auth/login-form";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
@@ -44,64 +44,94 @@ const LoginScreen = memo(() => {
       style={styles.root}
     >
       <ScrollView style={styles.container}>
-        <Image
-          source={require("../../assets/img/login.jpg")}
+        {/* <Image
+          source={require("../../../assets/img/evseg.png")}
           style={styles.imgBg}
-        />
-        <View style={styles.blurContainer}>
-          <Image
-            source={require("../../assets/img/nobglogo.png")}
-            style={styles.logo}
-          />
-        </View>
+          contentFit="contain"
+        /> */}
         <View style={styles.contentContainer}>
-          <MonSemiBold style={styles.welcomeText}>Тавтай морил </MonSemiBold>
+         <View>
+           <Text style={styles.logoText}>EVSEG</Text>
+           <View style={styles.divider}/>
+           <Text style={styles.logoText1}>Mongolian Premium Cashmere</Text>
+         </View>
           <LoginForm control={control} errors={errors} />
           {errors.root?.type === 401 && (
-            <MonMedium style={styles.errorText}>
+            <Text style={styles.errorText}>
               Нэвтрэх нэр нууц үг буруу байна
-            </MonMedium>
+            </Text>
           )}
-          <View style={styles.mt24} />
-          <TouchableOpacity
+          {/* <View style={styles.mt24} /> */}
+          <View>
+           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
             style={styles.loginContainer}
-          >
-            <MonBold style={styles.loginText}>Нэвтрэх</MonBold>
-          </TouchableOpacity>
-          <MonMedium style={styles.registerText}>
-            Хэрэв танд бүртгэл байхгүй бол
-          </MonMedium>
-          <TouchableOpacity
+           >
+            <Text style={styles.loginText}>Нэвтрэх</Text>
+           </TouchableOpacity>
+           <View style={styles.row}>
+            <Text style={styles.registerText}>
+            Бүртгэл байхгүй юу ? 
+            </Text>
+            <TouchableOpacity onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}>
+              <Text style={styles.registerButtonText}>  БҮРТГҮҮЛЭХ</Text>
+            </TouchableOpacity>
+           </View>
+           {/* <TouchableOpacity
             onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}
             style={[styles.loginContainer, styles.registerContainer]}
-          >
-            <MonBold style={styles.loginText}>Бүртгүүлэх</MonBold>
-          </TouchableOpacity>
+           >
+            <Text style={styles.loginText}>Бүртгүүлэх</Text>
+          </TouchableOpacity> */}
+          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 });
 
-LoginScreen.displayName = " LoginScreen";
+LoginScreen.displayName = "LoginScreen";
 
 export { LoginScreen };
 
 const styles = StyleSheet.create({
+  row:{
+    alignItems: 'center',
+    justifyContent:'center',
+    flexDirection: 'row',
+  },
   root: {
     flex: 1,
+  },
+  logoText1:{
+    color: Colors.bgs,
+    textAlign: 'center',
+    fontSize: 13,
+  },
+  divider:{
+    marginVertical: 5,
+    width: 190,
+    alignSelf: 'center',
+    height: 2,
+    backgroundColor: Colors.bgs,
   },
   container: {
     backgroundColor: Colors.white,
     flex: 1,
   },
-  imgBg: {
-    height: Dimensions.get("window").height / 2.5,
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
+  logoText:{
+    marginTop: 100,
+    fontSize: 60,
+    fontWeight: '400',
+    color: Colors.bgs,
+    textAlign:"center"
   },
+  // imgBg: {
+  //   height: Dimensions.get("window").height / 4,
+  //   // height: 100,
+  //   // width:300,
+  //   // alignSelf:"center"
+  // },
   logo: {
     width: 150,
     height: 150,
@@ -116,11 +146,9 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height / 2.5,
   },
   contentContainer: {
+    height: Dimensions.get('window').height,
+    justifyContent: 'space-evenly',
     backgroundColor: Colors.white,
-    flex: 2,
-    bottom: 50,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
   },
   welcomeText: {
     fontSize: 24,
@@ -131,10 +159,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   loginContainer: {
-    flex: 1,
     backgroundColor: Colors.bgs,
+    height: 50,
     marginHorizontal: 16,
-    borderRadius: 16,
+    borderRadius: 10,
     paddingVertical: 12,
     justifyContent: "center",
     alignItems: "center",
@@ -143,12 +171,16 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   registerContainer: {
-    backgroundColor: Colors.darkBg,
+    marginBottom: 50,
   },
   registerText: {
     textAlign: "center",
     marginVertical: 10,
-    color: Colors.black,
+    color: Colors.grey,
+  },
+  registerButtonText: {
+    textAlign: "center",
+    color: 'black',
   },
   mt24: {
     marginTop: 24,

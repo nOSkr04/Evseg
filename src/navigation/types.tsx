@@ -15,6 +15,7 @@ export enum NavigationRoutes {
   HomeScreen = "HomeScreen",
   ProfileScreen = "ProfileScreen",
   TestSheet = "TestSheet",
+  NewScreen = "NewScreen"
 }
 
 export type RootStackParamList = {
@@ -26,6 +27,8 @@ export type RootStackParamList = {
 export type RootTabParamList = {
   HomeScreen: undefined;
   ProfileScreen: undefined;
+
+
 };
 
 export type BottomSheetParamList = {
@@ -46,8 +49,8 @@ export type BottomSheetScreenProps<T extends keyof BottomSheetParamList> =
   NativeStackScreenProps<BottomSheetParamList, T>;
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-    interface RootParamList extends BottomSheetParamList {}
-    interface RootParamList extends RootTabParamList {}
+    interface RootParamList extends RootStackParamList { }
+    interface RootParamList extends BottomSheetParamList { }
+    interface RootParamList extends RootTabParamList { }
   }
 }

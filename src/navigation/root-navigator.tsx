@@ -40,7 +40,7 @@ function RootNavigator() {
             name={NavigationRoutes.Root}
             options={{ headerShown: false }}
           />
-          {/* <Stack.Screen component={ArticleDetailScreen} name={NavigationRoutes.ArticleDetailScreen} options={articleDetailScreen} /> */}
+          {/* <Stack.Screen component={NewScreen} name={NavigationRoutes.NewScreen} options={articleDetailScreen} /> */}
         </>
       ) : (
         <>

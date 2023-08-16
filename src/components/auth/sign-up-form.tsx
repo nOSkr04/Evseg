@@ -1,8 +1,7 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View,Text } from "react-native";
 import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { MonBold, MonSemiBold } from "../../widgets/styled-text";
-import { DefaultColors } from "../../constants/colors";
+import { Colors } from "../../constants/colors";
 
 export type IFormData = {
   name: string;
@@ -20,7 +19,7 @@ type Props = {
 const SignUpForm = ({ control, errors }: Props) => {
   return (
     <View style={styles.container}>
-      <MonSemiBold style={styles.title}>Бүртгүүлэх нэр</MonSemiBold>
+      <Text style={styles.title}>Бүртгүүлэх нэр</Text>
       <Controller
         control={control}
         name="name"
@@ -35,9 +34,9 @@ const SignUpForm = ({ control, errors }: Props) => {
         rules={{ required: true }}
       />
       {errors.name && (
-        <MonBold style={styles.errorText}>Заавал оруулна уу</MonBold>
+        <Text style={styles.errorText}>Заавал оруулна уу</Text>
       )}
-      <MonSemiBold style={styles.title}>Пин код (4 оронтой тоо):</MonSemiBold>
+      <Text style={styles.title}>Пин код (4 оронтой тоо):</Text>
       <Controller
         control={control}
         name="password"
@@ -53,7 +52,7 @@ const SignUpForm = ({ control, errors }: Props) => {
         rules={{ required: true }}
       />
       {errors.password && (
-        <MonBold style={styles.errorText}>Заавал оруулна уу</MonBold>
+        <Text style={styles.errorText}>Заавал оруулна уу</Text>
       )}
     </View>
   );
@@ -72,14 +71,14 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: 5,
     paddingLeft: 10,
-    color: DefaultColors.black,
+    color: Colors.black,
   },
   container: {
     marginHorizontal: 16,
     marginTop: 20,
   },
   errorText: {
-    color: DefaultColors.danger,
+    color: Colors.danger,
     fontSize: 12,
     marginBottom: 5,
     textAlign: "right",

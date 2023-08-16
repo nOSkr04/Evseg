@@ -1,8 +1,7 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View,Text } from "react-native";
 import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { MonBold, MonSemiBold } from "../../widgets/styled-text";
-import { DefaultColors } from "../../constants/colors";
+import { Colors } from "../../constants/colors";
 
 export type IFormData = {
   name: string;
@@ -20,12 +19,13 @@ type Props = {
 const LoginForm = ({ control, errors }: Props) => {
   return (
     <View style={styles.container}>
-      <MonSemiBold style={styles.title}>Нэвтрэх нэр</MonSemiBold>
+      <Text style={styles.title}>Нэвтрэх нэр</Text>
       <Controller
         control={control}
         name="name"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+          placeholder="Нэвтрэх нэр"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             style={styles.input}
@@ -35,14 +35,15 @@ const LoginForm = ({ control, errors }: Props) => {
         rules={{ required: true }}
       />
       {errors.name && (
-        <MonBold style={styles.errorText}>Заавал оруулна уу</MonBold>
+        <Text style={styles.errorText}>Заавал оруулна уу</Text>
       )}
-      <MonSemiBold style={styles.title}>Пин код (4 оронтой тоо):</MonSemiBold>
+      <Text style={styles.title}>Нууц үг</Text>
       <Controller
         control={control}
         name="password"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+          placeholder="Нууц үг"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             secureTextEntry
@@ -53,7 +54,7 @@ const LoginForm = ({ control, errors }: Props) => {
         rules={{ required: true }}
       />
       {errors.password && (
-        <MonBold style={styles.errorText}>Заавал оруулна уу</MonBold>
+        <Text style={styles.errorText}>Заавал оруулна уу</Text>
       )}
     </View>
   );
@@ -63,23 +64,22 @@ export default LoginForm;
 
 const styles = StyleSheet.create({
   input: {
-    borderWidth: 1,
     borderRadius: 10,
     marginBottom: 10,
-    height: 40,
+    backgroundColor: Colors.lightGrey,
+    height: 50,
     paddingLeft: 10,
   },
   title: {
     marginBottom: 5,
-    paddingLeft: 10,
-    color: DefaultColors.black,
+    color: Colors.black,
   },
   container: {
     marginHorizontal: 16,
     marginTop: 20,
   },
   errorText: {
-    color: DefaultColors.danger,
+    color: Colors.danger,
     fontSize: 12,
     marginBottom: 5,
     textAlign: "right",

@@ -6,7 +6,7 @@ import { AppBar } from "../../components/header/app-bar";
 import { Button } from "../../widgets/button";
 import { PostApi } from "../../api";
 import useColorScheme from "../../hooks/use-color-scheme";
-import colors from "../../constants/colors";
+import Colors from "../../constants/colors";
 
 const AddPostScreen = memo(() => {
   const [loading ,setLoading] = useState(false);
