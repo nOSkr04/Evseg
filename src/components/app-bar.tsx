@@ -15,17 +15,21 @@ const AppBar = memo(({ fullname }: Props) => {
             return {
                 paddingTop: sf.top + 10,
                 paddingBottom: 10,
-                paddingHorizontal:16,
-                backgroundColor:Colors.white,
-                borderBottomLeftRadius:20,
-      borderBottomRightRadius:20
+                paddingHorizontal: 16,
+                backgroundColor: Colors.white,
             }
         },
         [],
     )
     return (
         <View style={[containerStyle(), styles.root]}>
-            <Text style={styles.name}>{fullname}</Text>
+            {/* <Text style={styles.name}>{fullname}</Text> */}
+            <View>
+              <Text style={styles.logoStyle}>E V S E G</Text>
+              <View style={styles.divider}/>
+              <Text style={styles.textStyle}>Mongolian Premium Cashmere</Text>
+            </View>
+            <View style={styles.transaction}/>
             {/* <Text>1</Text> */}
         </View>
     )
@@ -36,13 +40,29 @@ AppBar.displayName = "AppBar"
 export { AppBar }
 
 const styles = StyleSheet.create({
-    name:{
-      fontSize:16,
-      fontWeight:"bold", 
+    transaction:{
+        height: 50,
+        width: 50,
+        backgroundColor: Colors.grey,
+    },
+    textStyle:{
+        fontSize:9,
+    },
+    divider:{
+        height: 1,
+        width: 125,
+        backgroundColor: Colors.black,
+    },
+    logoStyle:{
+        fontSize: 30,
+    },
+    name: {
+        fontSize: 16,
+        fontWeight: "bold",
     },
     root: {
-          flexDirection:"row",
-                justifyContent:"space-between",
-                alignItems:"center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     }
 })

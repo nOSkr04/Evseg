@@ -22,11 +22,21 @@ const HomeScreen = memo(() => {
       {/* <AppBar fullname={`${data?.lastName} ${data?.firstName}`} /> */}
       <AppBar fullname={"Пүрэвдорж жаргал"} />
       <View style={styles.container}>
-        <Image source={`https://cdn.ttgtmedia.com/rms/misc/qr_code_barcode.jpg`} style={styles.qrCode} contentFit="contain" />
+        <View style={styles.qrContainer}>
+         <Image source={`https://cdn.ttgtmedia.com/rms/misc/qr_code_barcode.jpg`} style={styles.qrCode} contentFit="contain" />
+        </View>
         <View style={styles.userContainer}>
+          <View style={styles.row}>
+            <View style={styles.dot}/>
+            <Text style={styles.description}>Таны урамшуулал</Text>
+          </View>
+          <View style={styles.divider}/>
           <View style={styles.pointContainer}>
-            <Text style={styles.point}>10000₮</Text>
-            <FontAwesome name="refresh" size={24} color={Colors.white} />
+            <View >
+              <Text style={styles.point1}>Нийт дүн: </Text>
+              <Text style={styles.point}>₮ 10000</Text>
+            </View>
+            <FontAwesome name="refresh" size={24} color={Colors.black} />
           </View>
         </View>
       </View>
@@ -39,12 +49,46 @@ HomeScreen.displayName = "HomeScreen";
 export { HomeScreen };
 
 const styles = StyleSheet.create({
+  description:{
+    fontSize: 16,
+  },
+  dot:{
+    marginHorizontal: 10,
+    height: 7,
+    width: 7,
+    borderRadius: 100,
+    backgroundColor: Colors.black,
+  },
   container: {
+    paddingHorizontal: 15,
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.lightGrey,
     marginTop: 8,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20
+  },
+  qrContainer:{
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 10,
+    backgroundColor: Colors.white,
+    borderRadius: 10,
+  },
+  row:{
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+  },
+  divider:{
+    width: '100%',
+    height: 1.2,
+    marginVertical: 10,
+    backgroundColor: Colors.black,
   },
   qrCode: {
     width: width * 0.9,
@@ -53,21 +97,34 @@ const styles = StyleSheet.create({
     marginVertical: 24
   },
   userContainer: {
+    paddingHorizontal: 15,
+    shadowColor: Colors.black,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 10,
     paddingVertical: 12,
-    backgroundColor: Colors.bgs,
-    marginHorizontal: 16,
+    marginTop: 10,
+    backgroundColor: Colors.white,
     borderRadius:12
   },
   pointContainer:{
+    marginBottom: 20,
     flexDirection:"row",
     justifyContent:"space-between",
     alignItems:"center",
-    paddingHorizontal:24
+    paddingRight: 15,
+  },
+  point1:{
+    marginVertical: 15,
+    color:Colors.grey,
+    fontSize:20,
   },
   point:{
-    color:Colors.white,
-    fontSize:24,
-    fontWeight:"bold"
-
+    color:Colors.black,
+    fontSize:25,
   }
 });
