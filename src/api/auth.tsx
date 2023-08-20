@@ -3,7 +3,7 @@ import { HttpRequest } from "../utils";
 const httpRequest = new HttpRequest();
 
 export const me = async () => {
-  const res = await httpRequest.get("/users/me");
+  const res = await httpRequest.get("/user/me");
   return res.data;
 };
 
@@ -12,7 +12,7 @@ export const login = async (data: { phone: string, password: string }) => {
   return res;
 };
 export const deleteUser = async (id: string) => {
-  const res = await httpRequest.del(`/users/${id}`);
+  const res = await httpRequest.del(`/user/${id}`);
   return res;
 };
 export const signUp = async (data: {
@@ -30,7 +30,7 @@ export const signUp = async (data: {
 };
 
 export const logout = async () => {
-  const res = await httpRequest.get("/users/logout");
+  const res = await httpRequest.get("/user/logout");
   return res;
 };
 

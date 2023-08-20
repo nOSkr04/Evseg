@@ -31,6 +31,7 @@ function RootNavigator() {
   if (isInitialLoading) {
     return null;
   }
+
   return (
     <Stack.Navigator>
       {user ? (
