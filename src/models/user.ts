@@ -1,22 +1,22 @@
 import { IUser } from "../interface/user";
 
 export class User implements IUser {
-  _id: string;
-  auth: string;
-  name: string;
-  deadline: string;
+  firstName: string;
+  lastName: string;
+  userTypes: string;
+  phone: string;
   privacy:boolean;
   constructor({
-    _id,
-    auth,
-    name,
-    deadline,
+    firstName,
+    lastName,
+    userTypes,
+    phone,
     privacy
   }: IUser) {
-    this._id = _id;
-    this.auth = auth;
-    this.name = name;
-    this.deadline = deadline;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.userTypes = userTypes;
+    this.phone = phone;
     this.privacy= privacy;
   
   }

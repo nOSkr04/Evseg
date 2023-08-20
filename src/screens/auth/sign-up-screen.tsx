@@ -31,7 +31,7 @@ const SignUpScreen = memo(() => {
   const onSubmit = async (data: IFormData) => {
     const sendData = {
       firstName: data.firstname,
-      register: `${data.alphabet}${data.alphabet1}${data.regNumber}`,
+      regNumber: `${data.alphabet}${data.alphabet1}${data.regNumber}`,
       phone: data.phone,
       lastName: data.lastname,
       bankAccount: data.bankAccount,

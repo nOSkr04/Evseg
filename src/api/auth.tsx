@@ -16,14 +16,14 @@ export const deleteUser = async (id: string) => {
   return res;
 };
 export const signUp = async (data: {
-  lastname: string,
-  firstname: string,
+  lastName: string,
+  firstName: string,
   password: string,
-  register: string,
+  regNumber: string,
   bankAccountNumber: string,
   bankAccount: string,
-  passwordVerify: string,
   phone: string,
+  userType: string,
 }) => {
   const res = await httpRequest.post("/user/register", data);
   return res;

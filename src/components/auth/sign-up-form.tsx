@@ -56,7 +56,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
             value={value}
           />
         )}
-        rules={{ required: { message: "Заавал оруулна уу", value: true }, minLength: { value: 4, message: "min 4" } }}
+        rules={{ required: true }}
       />
       {errors.lastname && (
         <Text style={styles.errorText}>{errors.lastname.message}</Text>
@@ -135,6 +135,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
           name="regNumber"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
+              keyboardType="decimal-pad"
               placeholder="Регстер №"
               onBlur={onBlur}
               onChangeText={(value) => onChange(value)}
@@ -142,7 +143,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
               value={value}
             />
           )}
-          rules={{ required: true, maxLength: 8 }}
+          rules={{ required: {value: true, message: "Заавал оруулна уу"}, minLength: { value: 8, message: "Регистерийн дугаараа шалгана уу" }}}
         />
       </View>
       {errors.regNumber && (
