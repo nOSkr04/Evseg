@@ -26,7 +26,7 @@ const AppBar = memo(({ fullname }: Props) => {
     return (
         <View style={[containerStyle(), styles.root]}>
             <Text style={styles.name}>{fullname}</Text>
-            <Text>1</Text>
+            {/* <Text>1</Text> */}
         </View>
     )
 })
