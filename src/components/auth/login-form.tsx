@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View,Text } from "react-native";
+import { StyleSheet, TextInput, View, Text } from "react-native";
 import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { Colors } from "../../constants/colors";
@@ -25,7 +25,7 @@ const LoginForm = ({ control, errors }: Props) => {
         name="name"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-          placeholder="Нэвтрэх нэр"
+            placeholder="Нэвтрэх нэр"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             style={styles.input}
@@ -43,7 +43,7 @@ const LoginForm = ({ control, errors }: Props) => {
         name="password"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-          placeholder="Нууц үг"
+            placeholder="Нууц үг"
             onBlur={onBlur}
             onChangeText={(value) => onChange(value)}
             secureTextEntry

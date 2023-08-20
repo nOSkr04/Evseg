@@ -8,8 +8,9 @@ import {
   BottomSheetBackdropProps,
 } from "@gorhom/bottom-sheet";
 
-import { TestSheet } from "../sheets/test";
 import { SelectBankSheet } from "../sheets/select-bank";
+import { SelectAlphabet } from "../sheets/selec-alphabet";
+import { SelectUserType } from "../sheets/select-user-type";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -34,21 +35,31 @@ const BottomSheetNavigator = () => {
     <Navigator>
       <Screen component={RootNavigator} name="RootNavigator" />
       <Screen
-        component={TestSheet}
-        name={NavigationRoutes.TestSheet}
-        options={{
-          backdropComponent: renderBackdrop,
-          snapPoints: [220],
-          index: 1,
-          topInset: insets.top,
-        }}
-      />
-      <Screen
         component={SelectBankSheet}
         name={NavigationRoutes.SelectBankSheet}
         options={{
           backdropComponent: renderBackdrop,
           snapPoints: [250],
+          index: 1,
+          topInset: insets.top,
+        }}
+      />
+       <Screen
+        component={SelectAlphabet}
+        name={NavigationRoutes.SelectAlphabet}
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints: [350],
+          index: 1,
+          topInset: insets.top,
+        }}
+      />
+       <Screen
+        component={SelectUserType}
+        name={NavigationRoutes.SelectUserType}
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints: [180],
           index: 1,
           topInset: insets.top,
         }}

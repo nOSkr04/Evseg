@@ -7,6 +7,7 @@ import {
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+
 export enum NavigationRoutes {
   Root = "Root",
   LoginScreen = "LoginScreen",
@@ -16,6 +17,8 @@ export enum NavigationRoutes {
   ProfileScreen = "ProfileScreen",
   TestSheet = "TestSheet",
   SelectBankSheet = "SelectBankSheet",
+  SelectAlphabet = "SelectAlphabet",
+  SelectUserType = "SelectUserType",
 }
 
 export type RootStackParamList = {
@@ -35,6 +38,8 @@ export type BottomSheetParamList = {
   RootNavigator: undefined;
   TestSheet: undefined;
   SelectBankSheet: {onChange: (bank: string) => void}
+  SelectAlphabet: {onChange: (alphabet: string) => void}
+  SelectUserType: {onChange: (type: string) => void}
 };
 
 // export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;

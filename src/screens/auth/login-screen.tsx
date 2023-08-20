@@ -52,34 +52,34 @@ const LoginScreen = memo(() => {
         <View style={styles.contentContainer}>
           {/* <View style={styles.top}/> */}
           <View style={styles.top}>
-           <Text style={styles.logoText}>EVSEG</Text>
-           <View style={styles.divider}/>
-           <Text style={styles.logoText1}>Mongolian Premium Cashmere</Text>
+            <Text style={styles.logoText}>EVSEG</Text>
+            <View style={styles.divider} />
+            <Text style={styles.logoText1}>Mongolian Premium Cashmere</Text>
           </View>
           <View style={styles.loginForm}>
-           <LoginForm control={control} errors={errors} />
-           {errors.root?.type === 401 && (
-            <Text style={styles.errorText}>
-              Нэвтрэх нэр нууц үг буруу байна
-            </Text>
-           )}
+            <LoginForm control={control} errors={errors} />
+            {errors.root?.type === 401 && (
+              <Text style={styles.errorText}>
+                Нэвтрэх нэр нууц үг буруу байна
+              </Text>
+            )}
           </View>
           <View style={styles.mt24} />
           <View >
-           <TouchableOpacity
-            onPress={handleSubmit(onSubmit)}
-            style={styles.loginContainer}
-           >
-            <Text style={styles.loginText}>Нэвтрэх</Text>
-           </TouchableOpacity>
-           <View style={styles.row}>
-             <Text style={styles.registerText}>
-              Бүртгэл байхгүй юу ? 
-             </Text>
-             <TouchableOpacity onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}>
-              <Text style={styles.registerButtonText}>  БҮРТГҮҮЛЭХ</Text>
-             </TouchableOpacity>
-           </View>
+            <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
+              style={styles.loginContainer}
+            >
+              <Text style={styles.loginText}>Нэвтрэх</Text>
+            </TouchableOpacity>
+            <View style={styles.row}>
+              <Text style={styles.registerText}>
+                Бүртгэл байхгүй юу ?
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}>
+                <Text style={styles.registerButtonText}>  БҮРТГҮҮЛЭХ</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -92,7 +92,7 @@ LoginScreen.displayName = "LoginScreen";
 export { LoginScreen };
 
 const styles = StyleSheet.create({
-  loginForm:{
+  loginForm: {
     paddingTop: 30,
     top: 250,
     width: Dimensions.get('screen').width,
@@ -100,25 +100,25 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: Colors.white,
   },
-  top:{
+  top: {
     paddingVertical: 80,
     backgroundColor: Colors.bgs,
   },
-  row:{
+  row: {
     marginBottom: 50,
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     flexDirection: 'row',
   },
   root: {
     flex: 1,
   },
-  logoText1:{
+  logoText1: {
     color: Colors.white,
     textAlign: 'center',
     fontSize: 13,
   },
-  divider:{
+  divider: {
     marginVertical: 5,
     width: 190,
     alignSelf: 'center',
@@ -129,11 +129,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     flex: 1,
   },
-  logoText:{
+  logoText: {
     fontSize: 60,
     fontWeight: '400',
     color: Colors.white,
-    textAlign:"center"
+    textAlign: "center"
   },
   logo: {
     width: 150,

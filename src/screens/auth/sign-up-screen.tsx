@@ -1,5 +1,4 @@
 import {
-  Alert,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
@@ -26,16 +25,24 @@ const SignUpScreen = memo(() => {
     control,
     formState: { errors },
     setError,
+    getValues
   } = useForm<IFormData>();
 
   const onSubmit = async (data: IFormData) => {
+    const sendData = {
+      firstName: data.firstname,
+      register: `${data.alphabet}${data.alphabet1}${data.regNumber}`,
+      phone: data.phone,
+      lastName: data.lastname,
+      bankAccount: data.bankAccount,
+      bankAccountNumber: data.bankAccountNumber,
+      password: data.password,
+      userType: data.userType,
+    }
     try {
-      const res = await AuthApi.signUp(data);
+      const res = await AuthApi.signUp(sendData);
       dispatch(authLogin(res));
     } catch (err: any) {
-      if (data.password.length < 4) {
-        return Alert.alert("Нууц үг хамгийн багадаа 4оронтой байна");
-      }
       setError("root", {
         type: err.statusCode,
       });
@@ -46,7 +53,7 @@ const SignUpScreen = memo(() => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.root}
     >
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <View style={styles.header}>
             <TouchableOpacity
@@ -59,10 +66,10 @@ const SignUpScreen = memo(() => {
             <TouchableOpacity
               style={styles.backArrow}
             >
-              <AntDesign name="left" size={24} color={"white"}/>
+              <AntDesign name="left" size={24} color={"white"} />
             </TouchableOpacity>
           </View>
-          <SignUpForm control={control} errors={errors} />
+          <SignUpForm control={control} errors={errors} getValues={getValues} />
           {errors.root?.type === 401 && (
             <Text style={styles.errorText}>
               Нэвтрэх нэр нууц үг буруу байна
@@ -81,6 +88,7 @@ const SignUpScreen = memo(() => {
           >
             <Text style={styles.loginText}>Бүртгүүлэх</Text>
           </TouchableOpacity>
+          <View style={styles.mt24} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -157,9 +165,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 8,
   },
-  header:{
-    flexDirection:"row",
-    justifyContent:"space-between",
-    marginTop:24
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 24
   }
 });
