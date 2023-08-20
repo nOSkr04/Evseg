@@ -15,7 +15,7 @@ export enum NavigationRoutes {
   HomeScreen = "HomeScreen",
   ProfileScreen = "ProfileScreen",
   TestSheet = "TestSheet",
-  NewScreen = "NewScreen"
+  SelectBankSheet = "SelectBankSheet",
 }
 
 export type RootStackParamList = {
@@ -34,6 +34,7 @@ export type RootTabParamList = {
 export type BottomSheetParamList = {
   RootNavigator: undefined;
   TestSheet: undefined;
+  SelectBankSheet: {onChange: (bank: string) => void}
 };
 
 // export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<RootStackParamList, Screen>;

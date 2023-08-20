@@ -50,19 +50,22 @@ const LoginScreen = memo(() => {
           contentFit="contain"
         /> */}
         <View style={styles.contentContainer}>
-         <View>
+          {/* <View style={styles.top}/> */}
+          <View style={styles.top}>
            <Text style={styles.logoText}>EVSEG</Text>
            <View style={styles.divider}/>
            <Text style={styles.logoText1}>Mongolian Premium Cashmere</Text>
-         </View>
-          <LoginForm control={control} errors={errors} />
-          {errors.root?.type === 401 && (
+          </View>
+          <View style={styles.loginForm}>
+           <LoginForm control={control} errors={errors} />
+           {errors.root?.type === 401 && (
             <Text style={styles.errorText}>
               Нэвтрэх нэр нууц үг буруу байна
             </Text>
-          )}
-          {/* <View style={styles.mt24} /> */}
-          <View>
+           )}
+          </View>
+          <View style={styles.mt24} />
+          <View >
            <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
             style={styles.loginContainer}
@@ -70,19 +73,13 @@ const LoginScreen = memo(() => {
             <Text style={styles.loginText}>Нэвтрэх</Text>
            </TouchableOpacity>
            <View style={styles.row}>
-            <Text style={styles.registerText}>
-            Бүртгэл байхгүй юу ? 
-            </Text>
-            <TouchableOpacity onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}>
+             <Text style={styles.registerText}>
+              Бүртгэл байхгүй юу ? 
+             </Text>
+             <TouchableOpacity onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}>
               <Text style={styles.registerButtonText}>  БҮРТГҮҮЛЭХ</Text>
-            </TouchableOpacity>
+             </TouchableOpacity>
            </View>
-           {/* <TouchableOpacity
-            onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}
-            style={[styles.loginContainer, styles.registerContainer]}
-           >
-            <Text style={styles.loginText}>Бүртгүүлэх</Text>
-          </TouchableOpacity> */}
           </View>
         </View>
       </ScrollView>
@@ -95,7 +92,20 @@ LoginScreen.displayName = "LoginScreen";
 export { LoginScreen };
 
 const styles = StyleSheet.create({
+  loginForm:{
+    paddingTop: 30,
+    top: 250,
+    width: Dimensions.get('screen').width,
+    position: 'absolute',
+    borderRadius: 20,
+    backgroundColor: Colors.white,
+  },
+  top:{
+    paddingVertical: 80,
+    backgroundColor: Colors.bgs,
+  },
   row:{
+    marginBottom: 50,
     alignItems: 'center',
     justifyContent:'center',
     flexDirection: 'row',
@@ -104,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logoText1:{
-    color: Colors.bgs,
+    color: Colors.white,
     textAlign: 'center',
     fontSize: 13,
   },
@@ -113,41 +123,26 @@ const styles = StyleSheet.create({
     width: 190,
     alignSelf: 'center',
     height: 2,
-    backgroundColor: Colors.bgs,
+    backgroundColor: Colors.white,
   },
   container: {
     backgroundColor: Colors.white,
     flex: 1,
   },
   logoText:{
-    marginTop: 100,
     fontSize: 60,
     fontWeight: '400',
-    color: Colors.bgs,
+    color: Colors.white,
     textAlign:"center"
   },
-  // imgBg: {
-  //   height: Dimensions.get("window").height / 4,
-  //   // height: 100,
-  //   // width:300,
-  //   // alignSelf:"center"
-  // },
   logo: {
     width: 150,
     height: 150,
     alignSelf: "center",
   },
-  blurContainer: {
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-    right: 0,
-    left: 0,
-    height: Dimensions.get("window").height / 2.5,
-  },
   contentContainer: {
     height: Dimensions.get('window').height,
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     backgroundColor: Colors.white,
   },
   welcomeText: {

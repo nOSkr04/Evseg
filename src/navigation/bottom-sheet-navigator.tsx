@@ -9,6 +9,7 @@ import {
 } from "@gorhom/bottom-sheet";
 
 import { TestSheet } from "../sheets/test";
+import { SelectBankSheet } from "../sheets/select-bank";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -38,6 +39,16 @@ const BottomSheetNavigator = () => {
         options={{
           backdropComponent: renderBackdrop,
           snapPoints: [220],
+          index: 1,
+          topInset: insets.top,
+        }}
+      />
+      <Screen
+        component={SelectBankSheet}
+        name={NavigationRoutes.SelectBankSheet}
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints: [250],
           index: 1,
           topInset: insets.top,
         }}
