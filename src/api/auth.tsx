@@ -7,8 +7,8 @@ export const me = async () => {
   return res.data;
 };
 
-export const login = async (data: { name: string, password: string }) => {
-  const res = await httpRequest.post("/users/login", data);
+export const login = async (data: { phone: string, password: string }) => {
+  const res = await httpRequest.post("/user/login", data);
   return res;
 };
 export const deleteUser = async (id: string) => {

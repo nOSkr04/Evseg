@@ -33,6 +33,7 @@ const LoginScreen = memo(() => {
       const res = await AuthApi.login(data);
       dispatch(authLogin(res));
     } catch (err: any) {
+      console.log(err)
       setError("root", {
         type: err.statusCode,
       });

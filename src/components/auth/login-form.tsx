@@ -4,14 +4,14 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import { Colors } from "../../constants/colors";
 
 export type IFormData = {
-  name: string;
+  phone: string;
   password: string;
 };
 
 type Props = {
   control: Control<IFormData, any>;
   errors: FieldErrors<{
-    name: string;
+    phone: string;
     password: string;
   }>;
 };
@@ -22,7 +22,7 @@ const LoginForm = ({ control, errors }: Props) => {
       <Text style={styles.title}>Нэвтрэх нэр</Text>
       <Controller
         control={control}
-        name="name"
+        name="phone"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             placeholder="Нэвтрэх нэр"
@@ -34,7 +34,7 @@ const LoginForm = ({ control, errors }: Props) => {
         )}
         rules={{ required: true }}
       />
-      {errors.name && (
+      {errors.phone && (
         <Text style={styles.errorText}>Заавал оруулна уу</Text>
       )}
       <Text style={styles.title}>Нууц үг</Text>
