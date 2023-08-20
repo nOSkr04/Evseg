@@ -221,7 +221,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
             value={value}
           />
         )}
-        rules={{ required: true }}
+        rules={{ required: {value: true, message: "Заавал оруулна уу"}, minLength: {value: 8, message: "Багадаа 8-н орон байх ёстой"} }}
       />
       {errors.password && (
         <Text style={styles.errorText}>Заавал оруулна уу</Text>
