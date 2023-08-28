@@ -1,3 +1,4 @@
+import { IEditForm } from "../components/auth/edit-profile-form";
 import { HttpRequest } from "../utils";
 
 const httpRequest = new HttpRequest();
@@ -28,6 +29,10 @@ export const signUp = async (data: {
   const res = await httpRequest.post("/user/register", data);
   return res;
 };
+
+export const editProfile = async({data, id} : {data: IEditForm, id: string}) => {
+  const res = await httpRequest.put(`/user/${id}`, data)
+}
 
 export const logout = async () => {
   const res = await httpRequest.get("/user/logout");

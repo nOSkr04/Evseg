@@ -11,4 +11,6 @@ export abstract class Colors {
   static fbPrimary = "#4267B2";
   static lightGrey = "#F5F5F5";
   static grey = "#707070";
+  static blue = '#366efa';
+  static green = 'green';
 }

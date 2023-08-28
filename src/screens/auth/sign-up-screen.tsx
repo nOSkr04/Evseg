@@ -17,6 +17,7 @@ import { Colors } from "../../constants/colors";
 import { authLogin } from "../../store/auth-slice";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import SignUpForm, { IFormData } from "../../components/auth/sign-up-form";
+import { AppBar } from "../../components/app-bar";
 const SignUpScreen = memo(() => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -56,18 +57,7 @@ const SignUpScreen = memo(() => {
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backArrow}
-            >
-              <AntDesign name="left" size={24} />
-            </TouchableOpacity>
-            <Text style={styles.welcomeText}>Бүртгүүлэх </Text>
-            <TouchableOpacity
-              style={styles.backArrow}
-            >
-              <AntDesign name="left" size={24} color={"white"} />
-            </TouchableOpacity>
+            <AppBar leading title="Бүртгүүлэх"/>
           </View>
           <SignUpForm control={control} errors={errors} getValues={getValues} />
           {errors.root?.type === 401 && (

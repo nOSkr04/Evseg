@@ -1,6 +1,6 @@
 import * as AuthApi from "./auth";
-// import * as PostApi from "./post";
+import * as TransactionApi from "./transaction"
 export {
     AuthApi,
-    // PostApi
+    TransactionApi
 };

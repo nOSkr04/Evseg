@@ -1,26 +1,44 @@
 import { IUser } from "../interface/user";
 
 export class User implements IUser {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  userTypes: string;
-  phone: string;
-  privacy:boolean;
+  _id: string
+  lastName: string
+  firstName: string
+  phone: string
+  bankAccount: string
+  bonusAmount: number
+  createdAt: string
+  regNumber: string
+  role: string
+  transactionAmount: number
+  userType: string
+  email: string
   constructor({
     _id,
     firstName,
     lastName,
-    userTypes,
     phone,
-    privacy
+    bankAccount,
+    bonusAmount,
+    createdAt,
+    regNumber,
+    role,
+    transactionAmount,
+    userType,
+    email
   }: IUser) {
     this._id = _id;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.userTypes = userTypes;
     this.phone = phone;
-    this.privacy= privacy;
+    this.bankAccount = bankAccount;
+    this.bonusAmount = bonusAmount;
+    this.createdAt = createdAt;
+    this.regNumber = regNumber;
+    this.role = role;
+    this.transactionAmount = transactionAmount;
+    this.userType = userType;
+    this.email = email;
   
   }
 

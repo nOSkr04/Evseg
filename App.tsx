@@ -9,22 +9,28 @@ import { StatusBar } from "expo-status-bar";
 import { SwrProviderConfig } from "./src/providers/swr-config";
 import Navigation from "./src/navigation/navigation-container";
 import React from "react";
+import useCachedResources from "./src/hooks/use-cached-resources";
 
 export default function App() {
-  return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <SWRConfig value={SwrProviderConfig}>
-          <StatusBar style="light" />
-          <SafeAreaProvider>
-                <GestureHandlerRootView style={styles.container}>
-                  <Navigation />
-                </GestureHandlerRootView>
-          </SafeAreaProvider>
-        </SWRConfig>
-      </PersistGate>
-    </Provider>
-  );
+  const isLoadingComplete = useCachedResources();
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <SWRConfig value={SwrProviderConfig}>
+            <StatusBar style="light" />
+            <SafeAreaProvider>
+              <GestureHandlerRootView style={styles.container}>
+                <Navigation />
+              </GestureHandlerRootView>
+            </SafeAreaProvider>
+          </SWRConfig>
+        </PersistGate>
+      </Provider>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

@@ -1,9 +1,6 @@
-import { Alert, StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import React, { memo, useState } from "react";
-import { useSWRToken } from "../../hooks/use-swr-token";
-import { IAuth } from "../../interface/auth";
+import {  StyleSheet, TouchableOpacity, View, Text, ScrollView } from "react-native";
+import React, { memo,  } from "react";
 import { AuthApi } from "../../api";
-import { Image } from "expo-image";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import IonIcons from "@expo/vector-icons/Ionicons";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -11,12 +8,13 @@ import { Colors } from "../../constants/colors";
 import { useDispatch } from "react-redux";
 import { authLogout } from "../../store/auth-slice";
 import { useNavigation } from "@react-navigation/native";
-import { format, formatDistanceToNowStrict } from "date-fns";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import mn from "date-fns/locale/mn";
 import useSwr from "swr"
 import { IUser } from "../../interface/user";
 import { NavigationRoutes } from "../../navigation/types";
+import { AppBar } from "../../components/app-bar";
+import Feather from '@expo/vector-icons/Feather';
+
 const ProfileScreen = memo(() => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -30,98 +28,65 @@ const ProfileScreen = memo(() => {
       console.log(err);
     }
   };
-  const onDeleteAccount = () => {
-    Alert.alert(
-      "Та бүртгэлээ устгахдаа итгэлтэй байна уу",
-      "Та тийм гэж дарснаар таны бүртгэл дахиж сэргэхгүйг анхаарна уу!",
-      [
-        {
-          text: "Үгүй",
-          style: "cancel",
-        },
-        {
-          text: "Тийм",
-          onPress: () => {
-            AuthApi.deleteUser(data?._id || "");
-            dispatch(authLogout());
-          },
-        },
-      ]
-    );
-  };
+  console.log(data)
   return (
-    <View style={styles.root}>
-      {/* <View style={styles.user}> */}
-      {/* <Image
-          contentFit="contain"
-          source={require("../../assets/img/icon.png")}
-          style={styles.avatar}
-        /> */}
-      {/* <Text style={styles.username}>{data?.name}</Text> */}
-      {/* <Text style={styles.deadline}>
-          Эрх:{" "}
-          {formatDistanceToNowStrict(
-            new Date(data?.deadline ? data.deadline : 0),
-            { locale: mn }
-          )}
-        </Text> */}
-      {/* <Text style={styles.deadline1}>
-          Дуусах хугацаа:{" "}
-          {format(new Date(data?.deadline ? data.deadline : 0), "yyyy-MM-dd")}
-        </Text> */}
-      {/* </View> */}
-      {/* <View style={styles.optionContainer}>
-        <TouchableOpacity
-          onPress={() => onDeleteAccount()}
-          style={styles.options}
-        >
-          <View style={styles.option}>
-            <AntDesign color={Colors.bgs} name="deleteuser" size={16} />
-            <Text style={styles.optionText}>Бүргтэл устгах</Text>
+    <ScrollView style={styles.root}>
+      <AppBar title="Миний мэдээлэл" />
+      <TouchableOpacity style={styles.profile} onPress={() => navigation.navigate(NavigationRoutes.EditProfile)}>
+        <View style={styles.option}>
+          <View style={styles.circleAvatar} />
+          <View >
+            <Text style={styles.profileName}>{data?.lastName} {data?.firstName}</Text>
+            <Text style={styles.userType}>{data?.userType}</Text>
           </View>
-          <AntDesign color={Colors.bgs} name="right" size={16} />
-        </TouchableOpacity>
-        <View style={styles.border} />
-        <TouchableOpacity onPress={logout} style={styles.options}>
-          <View style={styles.option}>
-            <AntDesign color={Colors.bgs} name="logout" size={16} />
-            <Text style={styles.optionText}>Гарах</Text>
+        </View>
+        <Feather name="edit" size={24} color={Colors.grey} />
+      </TouchableOpacity>
+      <View style={styles.account}>
+        <Text style={styles.description}>Мэдээлэл</Text>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.AddBank)}>
+          <View style={styles.passwordChangeContainer}>
+            <IonIcons name="md-card" size={24} color={Colors.white} />
           </View>
-          <AntDesign color={Colors.bgs} name="right" size={16} />
+          <Text style={styles.setting}>
+            Данс нэмэх 
+          </Text>
         </TouchableOpacity>
-        <View style={styles.border} />
-      </View> */}
-      <Text style={styles.userName}>{data?.lastName} {data?.firstName}</Text>
-      <View>
-       <View style={styles.container}>
-        <IonIcons name="person" size={24} />
-        <Text>
-          Хувийн мэдээлэл
-        </Text>
-       </View>
-       <View style={styles.container}>
-        <Entypo name="key" size={24} />
-        <Text>
-          Нууц үг солих
-        </Text>
-       </View>
-       <View style={styles.container}>
-        <IonIcons name="call" size={24} />
-        <Text>
-          Холбоо барих
-        </Text>
-       </View>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.TransactionHistory)}>
+          <View style={styles.passwordChangeContainer}>
+            <MaterialCommunityIcons name="bank" size={24} color={Colors.white} />
+          </View>
+          <Text style={styles.setting}>
+            Гүйлгээний түүх
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.ChangePassword)}>
+          <View style={styles.passwordChangeContainer}>
+            <Entypo name="key" size={24} color={Colors.white} />
+          </View>
+          <Text style={styles.setting}>
+            Нууц үг солих
+          </Text>
+        </TouchableOpacity>
       </View>
-      <View>
+      <View style={styles.account}>
+        <Text style={styles.description}>Аккаунт удирдлага</Text>
+        <TouchableOpacity style={styles.logoutContainer}>
+          <Text style={styles.call}>
+            Холбоо барих
+          </Text>
+          <IonIcons name="call" size={16} color={Colors.grey}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.logoutContainer} onPress={logout}>
+          <Text style={styles.deleteAccountText}>Бүртгэл устгах</Text>
+          <AntDesign name="deleteuser" color={Colors.blue} size={16} />
+        </TouchableOpacity>
         <TouchableOpacity onPress={logout} style={styles.logoutContainer}>
-          <AntDesign name="poweroff" color={Colors.white} size={16} />
-          <Text style={styles.registerButtonText}>Гарах</Text>
+          <Text style={styles.logoutText}>Гарах</Text>
+          <AntDesign name="logout" color={Colors.danger} size={16} />
         </TouchableOpacity>
-        {/* <TouchableOpacity onPress={() => onDeleteAccount}>
-          <Text style={styles.deleteAccount}>Бүртгэл устгах</Text>
-        </TouchableOpacity> */}
       </View>
-    </View>
+    </ScrollView>
   );
 });
 
@@ -130,43 +95,98 @@ ProfileScreen.displayName = "ProfileScreen";
 export { ProfileScreen };
 
 const styles = StyleSheet.create({
-  registerButtonText: {
-    textAlign: "center",
-    fontSize: 16,
-    color: Colors.white,
+  passwordChangeContainer: {
+    marginRight: 10,
+    backgroundColor: Colors.grey,
+    height: 50,
+    width: 50,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  deleteAccount:{
+  account: {
+    marginHorizontal: 15,
+    marginTop: 60,
+  },
+  setting: {
+    fontFamily: 'MonSemiBold',
+    fontSize: 16,
+  },
+  userType: {
+    fontFamily: 'MonThin',
+  },
+  description: {
+    fontFamily: 'MonThin',
+    color: Colors.grey,
+  },
+  circleAvatar: {
+    marginRight: 15,
+    height: 80,
+    width: 80,
+    borderRadius: 100,
+    backgroundColor: Colors.border,
+  },
+  profileName: {
+    fontSize: 17,
+    fontFamily: "MonSemiBold"
+  },
+  deleteAccountText: {
+    fontSize: 18,
+    fontFamily: 'MonMedium',
+    color: Colors.blue,
+  },
+  call: {
+    fontSize: 18,
+    fontFamily: 'MonMedium',
+    color: Colors.grey,
+  },
+  profile: {
+    marginHorizontal: 15,
+    marginTop: 60,
+    justifyContent: 'space-between',
+    gap: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  header: {
+    fontFamily: 'MonMedium',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  logoutText: {
+    textAlign: "center",
+    fontSize: 18,
+    fontFamily: 'MonMedium',
+    color: Colors.danger,
+  },
+  deleteAccount: {
     textAlign: 'right',
     fontSize: 15,
     marginTop: 15,
   },
   logoutContainer: {
     gap: 5,
-    backgroundColor: Colors.bgs,
-    height: 50,
-    borderRadius: 10,
-    paddingVertical: 12,
     flexDirection: 'row',
-    justifyContent: "center",
     alignItems: "center",
+    marginTop: 15,
   },
   container: {
     marginVertical: 8,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    gap: 10,
-    paddingLeft: 15,
-    height: 50,
+    // shadowColor: Colors.black,
+    // shadowOffset: {
+    //   width: 2,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 3.84,
+    // elevation: 5,
+    // gap: 10,
+    // paddingLeft: 15,
+    // height: 50,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: Colors.white,
+    // backgroundColor: Colors.white,
   },
   userName: {
     marginTop: 50,
@@ -175,8 +195,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   root: {
-    justifyContent: 'space-around',
-    paddingHorizontal: 15,
+    backgroundColor: Colors.white,
     flex: 1,
   },
   user: {
