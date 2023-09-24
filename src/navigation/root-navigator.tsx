@@ -8,7 +8,8 @@ import { authMe } from "../store/auth-slice";
 import { AuthApi } from "../api";
 import { LoginScreen } from "../screens/auth/login-screen";
 import { SignUpScreen } from "../screens/auth/sign-up-screen";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator,  } from "@react-navigation/native-stack";
+
 import { EditProfile } from "../screens/edit-profile/edit-profile";
 import { AddBank } from "../screens/add-bank/add-bank";
 import { TransactionHistory } from "../screens/transaction-history/transaction-history";

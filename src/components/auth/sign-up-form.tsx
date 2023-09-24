@@ -41,6 +41,8 @@ type Props = {
 
 const SignUpForm = ({ control, errors, getValues }: Props) => {
   const navigation = useNavigation();
+  const { userType } = getValues();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Овог</Text>
@@ -130,6 +132,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
           )}
           rules={{ required: true }}
         />
+
         <Controller
           control={control}
           name="regNumber"
@@ -143,13 +146,13 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
               value={value}
             />
           )}
-          rules={{ required: {value: true, message: "Заавал оруулна уу"}, minLength: { value: 8, message: "Регистерийн дугаараа шалгана уу" }}}
+          rules={{ required: { value: true, message: "Заавал оруулна уу" }, minLength: { value: 8, message: "Регистерийн дугаараа шалгана уу" } }}
         />
       </View>
       {errors.regNumber && (
         <Text style={styles.errorText}>Заавал оруулна уу</Text>
       )}
-       <Text style={styles.title}>Хэрэглэгчийн төрөл сонгох</Text>
+      <Text style={styles.title}>Хэрэглэгчийн төрөл сонгох</Text>
       <Controller
         control={control}
         name="userType"
@@ -169,44 +172,88 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
       {errors.userType && (
         <Text style={styles.errorText}>Заавал сонгоно уу</Text>
       )}
-      <Text style={styles.title}>Банк</Text>
-      <Controller
-        control={control}
-        name="bankAccount"
-        render={({ field: { onChange, value = "Банк сонгоно уу" } }) => (
-          <TouchableOpacity style={[styles.input, errors.bankAccount && styles.errorBorder]}
-            onPress={() => navigation.navigate(NavigationRoutes.SelectBankSheet, {
-              onChange: (bank: string) => {
-                onChange(bank)
-              }
-            })}
-          >
-            <Text style={styles.textColor}>{value}</Text>
-          </TouchableOpacity>
-        )}
-        rules={{ required: true }}
-      />
-      {errors.bankAccount && (
-        <Text style={styles.errorText}>Заавал оруулна уу</Text>
-      )}
-      <Text style={styles.title}>Дансны дугаар</Text>
-      <Controller
-        control={control}
-        name="bankAccountNumber"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            placeholder="Дансны дугаар"
-            onBlur={onBlur}
-            onChangeText={(value) => onChange(value)}
-            style={[styles.input, errors.bankAccountNumber && styles.errorBorder]}
-            value={value}
+      {/* {userType === "Жолооч" ? 
+        <>
+          <Text style={styles.title}>Банк</Text>
+          <Controller
+            control={control}
+            name="bankAccount"
+            render={({ field: { onChange, value = "Банк сонгоно уу" } }) => (
+              <TouchableOpacity style={[styles.input, errors.bankAccount && styles.errorBorder]}
+                onPress={() => navigation.navigate(NavigationRoutes.SelectBankSheet, {
+                  onChange: (bank: string) => {
+                    onChange(bank)
+                  }
+                })}
+              >
+                <Text style={styles.textColor}>{value}</Text>
+              </TouchableOpacity>
+            )}
+            rules={{ required: true }}
           />
+          {errors.bankAccount && (
+            <Text style={styles.errorText}>Заавал оруулна уу</Text>
+          )}
+          <Text style={styles.title}>Дансны дугаар</Text>
+          <Controller
+            control={control}
+            name="bankAccountNumber"
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="Дансны дугаар"
+                onBlur={onBlur}
+                onChangeText={(value) => onChange(value)}
+                style={[styles.input, errors.bankAccountNumber && styles.errorBorder]}
+                value={value}
+              />
+            )}
+            rules={{ required: true }}
+          />
+          {errors.regNumber && (
+            <Text style={styles.errorText}>Заавал оруулна уу</Text>
+          )}
+        </>
+        : userType === "Хөтөч" ?  <>
+        <Text style={styles.title}>Банк</Text>
+        <Controller
+          control={control}
+          name="bankAccount"
+          render={({ field: { onChange, value = "Банк сонгоно уу" } }) => (
+            <TouchableOpacity style={[styles.input, errors.bankAccount && styles.errorBorder]}
+              onPress={() => navigation.navigate(NavigationRoutes.SelectBankSheet, {
+                onChange: (bank: string) => {
+                  onChange(bank)
+                }
+              })}
+            >
+              <Text style={styles.textColor}>{value}</Text>
+            </TouchableOpacity>
+          )}
+          rules={{ required: true }}
+        />
+        {errors.bankAccount && (
+          <Text style={styles.errorText}>Заавал оруулна уу</Text>
         )}
-        rules={{ required: true }}
-      />
-      {errors.regNumber && (
-        <Text style={styles.errorText}>Заавал оруулна уу</Text>
-      )}
+        <Text style={styles.title}>Дансны дугаар</Text>
+        <Controller
+          control={control}
+          name="bankAccountNumber"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              placeholder="Дансны дугаар"
+              onBlur={onBlur}
+              onChangeText={(value) => onChange(value)}
+              style={[styles.input, errors.bankAccountNumber && styles.errorBorder]}
+              value={value}
+            />
+          )}
+          rules={{ required: true }}
+        />
+        {errors.regNumber && (
+          <Text style={styles.errorText}>Заавал оруулна уу</Text>
+        )}
+      </> : null
+      } */}
       <Text style={styles.title}>Шинэ нууц үг</Text>
       <Controller
         control={control}
@@ -221,7 +268,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
             value={value}
           />
         )}
-        rules={{ required: {value: true, message: "Заавал оруулна уу"}, minLength: {value: 8, message: "Багадаа 8-н орон байх ёстой"} }}
+        rules={{ required: { value: true, message: "Заавал оруулна уу" }, minLength: { value: 8, message: "Багадаа 8-н орон байх ёстой" } }}
       />
       {errors.password && (
         <Text style={styles.errorText}>Заавал оруулна уу</Text>

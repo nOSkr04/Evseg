@@ -60,7 +60,7 @@ const BottomSheetNavigator = () => {
         name={NavigationRoutes.SelectUserType}
         options={{
           backdropComponent: renderBackdrop,
-          snapPoints: [180],
+          snapPoints: [220],
           index: 1,
           topInset: insets.top,
         }}

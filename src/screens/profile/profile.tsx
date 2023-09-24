@@ -14,6 +14,7 @@ import { IUser } from "../../interface/user";
 import { NavigationRoutes } from "../../navigation/types";
 import { AppBar } from "../../components/app-bar";
 import Feather from '@expo/vector-icons/Feather';
+import { Image } from "expo-image";
 
 const ProfileScreen = memo(() => {
   const navigation = useNavigation();
@@ -34,7 +35,8 @@ const ProfileScreen = memo(() => {
       <AppBar title="Миний мэдээлэл" />
       <TouchableOpacity style={styles.profile} onPress={() => navigation.navigate(NavigationRoutes.EditProfile)}>
         <View style={styles.option}>
-          <View style={styles.circleAvatar} />
+          {/* <View style={styles.circleAvatar} /> */}
+          <Image source={require("../../../assets/logo.png")} style={styles.circleAvatar}  contentFit="cover"  />
           <View >
             <Text style={styles.profileName}>{data?.lastName} {data?.firstName}</Text>
             <Text style={styles.userType}>{data?.userType}</Text>
@@ -124,7 +126,6 @@ const styles = StyleSheet.create({
     height: 80,
     width: 80,
     borderRadius: 100,
-    backgroundColor: Colors.border,
   },
   profileName: {
     fontSize: 17,
@@ -195,7 +196,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   root: {
-    backgroundColor: Colors.white,
+    backgroundColor:Colors.bg,
+
     flex: 1,
   },
   user: {

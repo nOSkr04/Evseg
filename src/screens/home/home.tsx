@@ -1,4 +1,4 @@
-import {  Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { memo } from "react";
 import { AppBar } from "../../components/app-bar";
 import { IUser } from "../../interface/user";
@@ -8,7 +8,6 @@ import { Colors } from "../../constants/colors";
 import { Image } from "expo-image";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import RootNavigator from "../../navigation/root-navigator";
 import { NavigationRoutes } from "../../navigation/types";
 import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("screen")
@@ -22,29 +21,42 @@ const HomeScreen = memo(() => {
   return (
     <>
       <AppBar />
+      <View style={styles.root}>
       <Text style={styles.scanMe}>QR УНШУУЛАХ</Text>
       <View style={styles.container}>
         <View style={styles.qrContainer}>
           <Image source={`https://cdn.ttgtmedia.com/rms/misc/qr_code_barcode.jpg`} style={styles.qrCode} contentFit="contain" />
           <View style={styles.ticketLine}>
-            <View style={styles.leftPoint}  />
+            <View style={styles.leftPoint} />
             <View>
-            <View style={styles.dotBorder}  />
+              <View style={styles.dotBorder} />
             </View>
-            <View style={styles.rightPoint}  />
+            <View style={styles.rightPoint} />
           </View>
           <View style={styles.pointContainer} >
-              <Text style={styles.point}>
-                {data?.bonusAmount && data?.bonusAmount.toLocaleString()}₮
-              </Text>
-              <Text style={styles.point1}>Урамшуулалын дүн: </Text>
-            </View>
+            {data?.userType === "Хэрэглэгч" ?
+              <>
+                <Text style={styles.point1}>Эпойнт: </Text>
+                <Text style={styles.point}>
+                  {data?.bonusAmount && data?.bonusAmount.toLocaleString()}
+                </Text>
+              </>
+              :
+              <>
+                <Text style={styles.point1}>Урамшуулалын дүн: </Text>
+                <Text style={styles.point}>
+                  {data?.bonusAmount && data?.bonusAmount.toLocaleString()} ₮
+                </Text>
+              </>
+            }
+          </View>
         </View>
         <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.Transaction)}>
           <AntDesign name="arrowright" color={Colors.transparent} size={16} />
           <Text style={styles.registerButtonText}>Гүйлгээ хийх</Text>
           <AntDesign name="arrowright" color={Colors.white} size={16} />
         </TouchableOpacity>
+      </View>
       </View>
     </>
   );
@@ -55,6 +67,10 @@ HomeScreen.displayName = "HomeScreen";
 export { HomeScreen };
 
 const styles = StyleSheet.create({
+  root:{
+    flex:1,
+    backgroundColor:Colors.bg
+  },
   totalAmoungContainer: {
     textAlign: 'center',
   },
@@ -77,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   scanMe: {
-    fontFamily:'MonMedium',
+    fontFamily: 'MonMedium',
     marginTop: 20,
     textAlign: 'center',
     fontSize: 25,
@@ -95,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
     flex: 1,
-    backgroundColor: Colors.lightGrey,
+    backgroundColor:Colors.bg,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20
   },
@@ -150,32 +166,32 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   dotBorder: {
-    borderWidth:1,
+    borderWidth: 1,
     borderStyle: "dashed",
     width: width - 100,
-    borderColor:Colors.lightGrey
+    borderColor: Colors.lightGrey
   },
-  ticketLine:{
-    flexDirection:"row",
-    justifyContent:"space-between",
-    alignItems:"center",
+  ticketLine: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
-  rightPoint:{
-    width:20,
-    height:20,
-    borderRadius:100,
-    backgroundColor:Colors.lightGrey,
+  rightPoint: {
+    width: 20,
+    height: 20,
+    borderRadius: 100,
+    backgroundColor: Colors.lightGrey,
     left: 10
   },
-  leftPoint:{
-    width:20,
-    height:20,
-    borderRadius:100,
-    backgroundColor:Colors.lightGrey,
+  leftPoint: {
+    width: 20,
+    height: 20,
+    borderRadius: 100,
+    backgroundColor: Colors.lightGrey,
     right: 10
   },
-  pointContainer:{
-    marginTop:10,
-    marginBottom:24
+  pointContainer: {
+    marginTop: 10,
+    marginBottom: 24
   }
 });

@@ -17,6 +17,7 @@ export enum NavigationRoutes {
   RootNavigator = "RootStackNavigator",
   HomeScreen = "HomeScreen",
   ProfileScreen = "ProfileScreen",
+  EcommerceScreen = "EcommerceScreen",
   TestSheet = "TestSheet",
   SelectBankSheet = "SelectBankSheet",
   SelectAlphabet = "SelectAlphabet",
@@ -43,6 +44,7 @@ export type RootStackParamList = {
 export type RootTabParamList = {
   HomeScreen: undefined;
   ProfileScreen: undefined;
+  EcommerceScreen: undefined;
 
 
 };

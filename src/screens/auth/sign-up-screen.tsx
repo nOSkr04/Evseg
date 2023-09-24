@@ -15,7 +15,6 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthApi } from "../../api";
 import { Colors } from "../../constants/colors";
 import { authLogin } from "../../store/auth-slice";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import SignUpForm, { IFormData } from "../../components/auth/sign-up-form";
 import { AppBar } from "../../components/app-bar";
 const SignUpScreen = memo(() => {
@@ -26,7 +25,7 @@ const SignUpScreen = memo(() => {
     control,
     formState: { errors },
     setError,
-    getValues
+    getValues,
   } = useForm<IFormData>();
 
   const onSubmit = async (data: IFormData) => {

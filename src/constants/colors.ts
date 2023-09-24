@@ -1,4 +1,5 @@
 export abstract class Colors {
+  static bg = 'rgb(242, 242, 242)';
   static black = "black";
   static white = "white";
   static danger = "#F12B2B";

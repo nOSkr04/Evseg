@@ -28,10 +28,15 @@ const SelectUserType = memo(({ route }: Props) => {
         {
             name: "Жолооч",
             icon: "ios-car-outline"
-        },{
+        },
+        {
             name: "Хөтөч",
+            icon: "map-outline"
+        },
+        {
+        name: "Хэрэглэгч",
             icon: "person-outline"
-        }
+        },
     ]
 
     const renderItems = useCallback(({ item, index }: { item: { name: string , icon: string}, index: number }) => {
@@ -47,20 +52,6 @@ const SelectUserType = memo(({ route }: Props) => {
         )
     }, [])
     return (
-        // <View>
-        //     <TouchableOpacity style={styles.row}>
-        //         <Ionicons name="ios-car-outline" size={24} 
-        //         style={styles.container}
-        //         onPress={() => changed("Жолооч")}/>
-        //         <Text style={styles.textStyle}>Жолооч</Text>
-        //     </TouchableOpacity>
-        //     <TouchableOpacity style={styles.row}>
-        //         <Ionicons name="person-outline" size={24} 
-        //         style={styles.container}
-        //         onPress={() => changed("Хөтөч")}/>
-        //         <Text style={styles.textStyle}>Хөтөч</Text>
-        //     </TouchableOpacity>
-        // </View>
         <FlatList 
         data={data} renderItem={renderItems}
         />
