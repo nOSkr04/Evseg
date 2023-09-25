@@ -21,6 +21,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.tselmen.Evseg"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c0f72e24-d1e3-4af0-99aa-a43163a50c44"
       }
     }
   }
