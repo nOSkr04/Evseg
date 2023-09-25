@@ -8,13 +8,16 @@ import { authMe } from "../store/auth-slice";
 import { AuthApi } from "../api";
 import { LoginScreen } from "../screens/auth/login-screen";
 import { SignUpScreen } from "../screens/auth/sign-up-screen";
-import { createNativeStackNavigator,  } from "@react-navigation/native-stack";
+import { createNativeStackNavigator, } from "@react-navigation/native-stack";
 
 import { EditProfile } from "../screens/edit-profile/edit-profile";
 import { AddBank } from "../screens/add-bank/add-bank";
 import { TransactionHistory } from "../screens/transaction-history/transaction-history";
 import { ChangePassword } from "../screens/change-password/change-password";
 import { Transaction } from "../screens/transaction/transaction";
+import { QrLightBox } from "../screens/home/qr-light-box";
+import { ProductDetail } from "../screens/ecommerce/detail";
+import { ProductLightBox } from "../screens/ecommerce/product-light-box";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -40,7 +43,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator>
-      {user ? (
+      {!user ? (
         <>
           <Stack.Screen
             component={BottomTabNavigator}
@@ -85,6 +88,34 @@ function RootNavigator() {
             options={{
               headerShown: false,
               fullScreenGestureEnabled: true
+            }}
+          />
+          <Stack.Screen
+            component={ProductDetail}
+            name={NavigationRoutes.ProductDetailScreen}
+            options={{
+              headerShown: false,
+              fullScreenGestureEnabled: true
+            }}
+          />
+          <Stack.Screen
+            name={NavigationRoutes.QrLightBox}
+            component={QrLightBox}
+            options={{
+              headerShown: false,
+              animation: "fade",
+              gestureEnabled: true,
+              presentation: "containedTransparentModal",
+            }}
+          />
+          <Stack.Screen
+            name={NavigationRoutes.ProductLightBox}
+            component={ProductLightBox}
+            options={{
+              headerShown: false,
+              animation: "fade",
+              gestureEnabled: true,
+              presentation: "containedTransparentModal",
             }}
           />
           {/* <Stack.Screen component={NewScreen} name={NavigationRoutes.NewScreen} options={articleDetailScreen} /> */}

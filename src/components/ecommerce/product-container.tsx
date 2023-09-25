@@ -1,13 +1,21 @@
-import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { memo } from 'react'
+import { Dimensions, Pressable, StyleSheet, Text,  View } from 'react-native'
+import React, { memo, useCallback } from 'react'
 import { Image } from 'expo-image'
 import { Colors } from '../../constants/colors'
+import { useNavigation } from '@react-navigation/native'
+import { NavigationRoutes } from '../../navigation/types'
+import { ProductType } from '../../screens/ecommerce/ecommerce'
 
 const width = Dimensions.get("window").width
 
-const ProductContainer = memo(({ item }: { item: any }) => {
+
+const ProductContainer = memo(({ item }: { item: ProductType }) => {
+    const navigation = useNavigation();
+    const onDetail = useCallback(() => {
+        navigation.navigate(NavigationRoutes.ProductDetailScreen, {item})
+    }, [])
     return (
-        <Pressable style={styles.container}>
+        <Pressable style={styles.container} onPress={onDetail}>
             <Image source={item.img} style={styles.image} contentFit='contain' />
             <Text style={styles.title}>
                 {item.name}
@@ -28,40 +36,40 @@ export { ProductContainer }
 
 const styles = StyleSheet.create({
     container: {
-        width: width * 0.5 - 16- 5 ,
-        marginRight:10,
+        width: width * 0.5 - 16 - 5,
+        marginRight: 10,
         backgroundColor: Colors.white,
-        padding:6,
-        borderRadius:4,
-        marginTop:8
+        padding: 6,
+        borderRadius: 4,
+        marginTop: 8
     },
     image: {
         width: "100%",
         height: 265,
-        backgroundColor:Colors.black
+        backgroundColor: Colors.black
     },
-    title:{
+    title: {
         fontFamily: 'MonSemiBold',
-        marginVertical:8
+        marginVertical: 8
     },
-    price:{
-        marginBottom:12,
-        fontFamily:"MonMedium",
-        fontSize:12
+    price: {
+        marginBottom: 12,
+        fontFamily: "MonMedium",
+        fontSize: 12
     },
-    button:{
-        backgroundColor:Colors.fbPrimary,
-        alignItems:"center",
-        justifyContent:"center",
-        paddingVertical:8,
-        marginHorizontal:12,
-        borderRadius:4,
-        marginTop:6,
-        marginBottom:8
+    button: {
+        backgroundColor: Colors.fbPrimary,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingVertical: 8,
+        marginHorizontal: 12,
+        borderRadius: 4,
+        marginTop: 6,
+        marginBottom: 8
     },
-    buttonTitle:{
+    buttonTitle: {
         fontFamily: 'MonSemiBold',
-        fontSize:12,
-        color:Colors.white
+        fontSize: 12,
+        color: Colors.white
     }
 })

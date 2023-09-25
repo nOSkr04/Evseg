@@ -2,6 +2,16 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React, { memo, useCallback } from 'react'
 import { AppBar } from '../../components/app-bar'
 import { ProductContainer } from '../../components/ecommerce/product-container'
+import { FadeOutDown, ZoomInEasyDown } from 'react-native-reanimated'
+import { Stagger } from '../../components/animate/stagger'
+
+export type ProductType = {
+  _id: string,
+  img: string
+  imgs: string[]
+  name: string
+  price: number
+}
 
 const EcommerceScreen = memo(() => {
   const data = [
@@ -9,9 +19,17 @@ const EcommerceScreen = memo(() => {
     { _id: "2", img: "https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912161311_79da6c8b54f6d0bab8aef16b70862612.JPG", imgs: ["https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912161311_79da6c8b54f6d0bab8aef16b70862612.JPG", "https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912161333_48ffd935576e7cf8f6a972ee8e893ebb.JPG", "https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912161826_576a38a77942641628cd37939aafe236.JPG"], name: "Пиджак", price: 780000 },
     { _id: "3", img: "https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912160447_95c47f62dd831a1888877a0634280588.JPG", imgs: ["https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912160447_95c47f62dd831a1888877a0634280588.JPG", "https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912160459_5c3955a4861bcc31e93ddd96422588de.JPG"], name: "Пальто", price: 1489000 }
   ]
-  const renderItem = useCallback(({ item }: { item: any }) => {
+  const renderItem = useCallback(({ item }: { item: ProductType }) => {
     return (
-      <ProductContainer item={item} />
+      <Stagger
+        stagger={50}
+        duration={300}
+        exitDirection={-1}
+        entering={() => ZoomInEasyDown.springify()}
+        exiting={() => FadeOutDown.springify()}
+      >
+        <ProductContainer item={item} />
+      </Stagger>
     )
   }, [])
   return (

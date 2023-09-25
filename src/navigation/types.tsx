@@ -6,6 +6,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ProductType } from "../screens/ecommerce/ecommerce";
 
 
 
@@ -27,7 +28,10 @@ export enum NavigationRoutes {
   TransactionHistory = "TransactionHistory",
   ChangePassword = "ChangePassword",
   Transaction = "Transaction",
-  SelectOwnBankAccount = "SelectOwnBankAccount"
+  SelectOwnBankAccount = "SelectOwnBankAccount",
+  QrLightBox= "QrLightBox",
+  ProductDetailScreen= "ProductDetailScreen",
+  ProductLightBox= "ProductLightBox",
 }
 
 export type RootStackParamList = {
@@ -39,6 +43,9 @@ export type RootStackParamList = {
   TransactionHistory: undefined;
   ChangePassword: undefined;
   Transaction: undefined;
+  QrLightBox: undefined;
+  ProductDetailScreen: {item:ProductType};
+  ProductLightBox: {data: string[], indexNumber: number};
 };
 
 export type RootTabParamList = {

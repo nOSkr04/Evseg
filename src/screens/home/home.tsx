@@ -1,16 +1,27 @@
-import { Dimensions, StyleSheet, Text, View } from "react-native";
-import React, { memo } from "react";
+import { Dimensions, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { memo, useCallback } from "react";
 import { AppBar } from "../../components/app-bar";
 import { IUser } from "../../interface/user";
 import useSwr from "swr"
 import { AuthApi } from "../../api";
 import { Colors } from "../../constants/colors";
-import { Image } from "expo-image";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { NavigationRoutes } from "../../navigation/types";
 import { useNavigation } from "@react-navigation/native";
+import Animated, { SharedTransition, withSpring } from "react-native-reanimated";
+import QRCode from "react-native-qrcode-svg";
 const { width } = Dimensions.get("screen")
+
+
+const customTransition = SharedTransition.custom((values) => {
+  "worklet";
+  return {
+    height: withSpring(values.targetHeight),
+    width: withSpring(values.targetWidth),
+    originX: withSpring(values.targetOriginX),
+    originY: withSpring(values.targetOriginY,),
+  };
+});
 
 const HomeScreen = memo(() => {
   const { data } = useSwr<IUser>("swr.user.me", async () => {
@@ -18,45 +29,53 @@ const HomeScreen = memo(() => {
   });
   const navigation = useNavigation();
 
+  const onLightBox = useCallback(() => {
+    navigation.navigate(NavigationRoutes.QrLightBox)
+  }, [])
+
   return (
     <>
       <AppBar />
       <View style={styles.root}>
-      <Text style={styles.scanMe}>QR УНШУУЛАХ</Text>
-      <View style={styles.container}>
-        <View style={styles.qrContainer}>
-          <Image source={`https://cdn.ttgtmedia.com/rms/misc/qr_code_barcode.jpg`} style={styles.qrCode} contentFit="contain" />
-          <View style={styles.ticketLine}>
-            <View style={styles.leftPoint} />
-            <View>
-              <View style={styles.dotBorder} />
+        <Text style={styles.scanMe}>QR УНШУУЛАХ</Text>
+        <View style={styles.container}>
+          <View style={styles.qrContainer}>
+            <TouchableOpacity onPress={onLightBox}>
+              <Animated.View sharedTransitionTag="userQrCode" sharedTransitionStyle={customTransition} >
+                <QRCode logo={require("../../../assets/img/evseg.png")} logoBackgroundColor={Colors.white} size={144} value={data?._id} />
+              </Animated.View>
+            </TouchableOpacity>
+            <View style={styles.ticketLine}>
+              <View style={styles.leftPoint} />
+              <View>
+                <View style={styles.dotBorder} />
+              </View>
+              <View style={styles.rightPoint} />
             </View>
-            <View style={styles.rightPoint} />
+            <View style={styles.pointContainer} >
+              {data?.userType === "Хэрэглэгч" ?
+                <>
+                  <Text style={styles.point1}>Эпойнт: </Text>
+                  <Text style={styles.point}>
+                    {data?.bonusAmount && data?.bonusAmount.toLocaleString()}
+                  </Text>
+                </>
+                :
+                <>
+                  <Text style={styles.point1}>Урамшуулалын дүн: </Text>
+                  <Text style={styles.point}>
+                    {data?.bonusAmount && data?.bonusAmount.toLocaleString()} ₮
+                  </Text>
+                </>
+              }
+            </View>
           </View>
-          <View style={styles.pointContainer} >
-            {data?.userType === "Хэрэглэгч" ?
-              <>
-                <Text style={styles.point1}>Эпойнт: </Text>
-                <Text style={styles.point}>
-                  {data?.bonusAmount && data?.bonusAmount.toLocaleString()}
-                </Text>
-              </>
-              :
-              <>
-                <Text style={styles.point1}>Урамшуулалын дүн: </Text>
-                <Text style={styles.point}>
-                  {data?.bonusAmount && data?.bonusAmount.toLocaleString()} ₮
-                </Text>
-              </>
-            }
-          </View>
+          <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.Transaction)}>
+            <AntDesign name="arrowright" color={Colors.transparent} size={16} />
+            <Text style={styles.registerButtonText}>Гүйлгээ хийх</Text>
+            <AntDesign name="arrowright" color={Colors.white} size={16} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.Transaction)}>
-          <AntDesign name="arrowright" color={Colors.transparent} size={16} />
-          <Text style={styles.registerButtonText}>Гүйлгээ хийх</Text>
-          <AntDesign name="arrowright" color={Colors.white} size={16} />
-        </TouchableOpacity>
-      </View>
       </View>
     </>
   );
@@ -67,9 +86,9 @@ HomeScreen.displayName = "HomeScreen";
 export { HomeScreen };
 
 const styles = StyleSheet.create({
-  root:{
-    flex:1,
-    backgroundColor:Colors.bg
+  root: {
+    flex: 1,
+    backgroundColor: Colors.bg
   },
   totalAmoungContainer: {
     textAlign: 'center',
@@ -111,7 +130,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
     flex: 1,
-    backgroundColor:Colors.bg,
+    backgroundColor: Colors.bg,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20
   },
