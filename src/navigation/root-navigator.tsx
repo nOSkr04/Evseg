@@ -43,7 +43,7 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator>
-      {!user ? (
+      {user ? (
         <>
           <Stack.Screen
             component={BottomTabNavigator}

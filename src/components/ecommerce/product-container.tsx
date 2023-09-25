@@ -5,6 +5,7 @@ import { Colors } from '../../constants/colors'
 import { useNavigation } from '@react-navigation/native'
 import { NavigationRoutes } from '../../navigation/types'
 import { ProductType } from '../../screens/ecommerce/ecommerce'
+import { priceBrief } from '../../utils/price-brief'
 
 const width = Dimensions.get("window").width
 
@@ -21,7 +22,7 @@ const ProductContainer = memo(({ item }: { item: ProductType }) => {
                 {item.name}
             </Text>
             <Text style={styles.title}>
-                {item.price.toLocaleString()} ₮
+                {priceBrief(item.price)}
             </Text>
             <View style={styles.button}>
                 <Text style={styles.buttonTitle}>Сагслах</Text>

@@ -1,8 +1,7 @@
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text } from 'react-native'
+import {  FlatList, StyleSheet,  } from 'react-native'
 import React, { memo, useCallback } from 'react'
 import { AppBar } from '../../components/app-bar'
 import { Colors } from '../../constants/colors'
-import useSWRInfinite from "swr/infinite";
 import useSwr from "swr"
 import { TransactionApi } from '../../api'
 import { IUser } from '../../interface/user'

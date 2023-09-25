@@ -8,20 +8,9 @@ import { Colors } from "../../constants/colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { NavigationRoutes } from "../../navigation/types";
 import { useNavigation } from "@react-navigation/native";
-import Animated, { SharedTransition, withSpring } from "react-native-reanimated";
+import Animated  from "react-native-reanimated";
 import QRCode from "react-native-qrcode-svg";
 const { width } = Dimensions.get("screen")
-
-
-const customTransition = SharedTransition.custom((values) => {
-  "worklet";
-  return {
-    height: withSpring(values.targetHeight),
-    width: withSpring(values.targetWidth),
-    originX: withSpring(values.targetOriginX),
-    originY: withSpring(values.targetOriginY,),
-  };
-});
 
 const HomeScreen = memo(() => {
   const { data } = useSwr<IUser>("swr.user.me", async () => {
@@ -37,12 +26,12 @@ const HomeScreen = memo(() => {
     <>
       <AppBar />
       <View style={styles.root}>
-        <Text style={styles.scanMe}>QR УНШУУЛАХ</Text>
+        <Animated.Text style={styles.scanMe} sharedTransitionTag="qrTitle"  >QR УНШУУЛАХ</Animated.Text>
         <View style={styles.container}>
           <View style={styles.qrContainer}>
-            <TouchableOpacity onPress={onLightBox}>
-              <Animated.View sharedTransitionTag="userQrCode" sharedTransitionStyle={customTransition} >
-                <QRCode logo={require("../../../assets/img/evseg.png")} logoBackgroundColor={Colors.white} size={144} value={data?._id} />
+            <TouchableOpacity onPress={onLightBox} style={styles.qrContent} >
+              <Animated.View sharedTransitionTag="userQrCode"  >
+                <QRCode logoBackgroundColor={Colors.white} size={280} value={data?._id} />
               </Animated.View>
             </TouchableOpacity>
             <View style={styles.ticketLine}>
@@ -70,11 +59,13 @@ const HomeScreen = memo(() => {
               }
             </View>
           </View>
-          <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.Transaction)}>
-            <AntDesign name="arrowright" color={Colors.transparent} size={16} />
-            <Text style={styles.registerButtonText}>Гүйлгээ хийх</Text>
-            <AntDesign name="arrowright" color={Colors.white} size={16} />
-          </TouchableOpacity>
+          {data?.userType !== "Хэрэглэгч" &&
+            <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.Transaction)}>
+              <AntDesign name="arrowright" color={Colors.transparent} size={16} />
+              <Text style={styles.registerButtonText}>Гүйлгээ хийх</Text>
+              <AntDesign name="arrowright" color={Colors.white} size={16} />
+            </TouchableOpacity>
+          }
         </View>
       </View>
     </>
@@ -212,5 +203,9 @@ const styles = StyleSheet.create({
   pointContainer: {
     marginTop: 10,
     marginBottom: 24
+  },
+  qrContent: {
+    alignSelf: "center",
+    marginVertical: 12
   }
 });

@@ -91,7 +91,6 @@ Carousel.displayName = "Carousel";
 const styles = StyleSheet.create({
   root: {
     position: "relative",
-    flex: 1,
   },
   indicator: {
     position: "absolute",

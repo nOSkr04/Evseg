@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     flexDirection: "column",
-    backgroundColor: "rgba(0, 0, 0, .6)",
+    backgroundColor: "rgba(0, 0, 0, .94)",
   },
   content: {
     justifyContent: "center",
