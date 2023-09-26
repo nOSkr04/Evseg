@@ -18,6 +18,9 @@ import { Transaction } from "../screens/transaction/transaction";
 import { QrLightBox } from "../screens/home/qr-light-box";
 import { ProductDetail } from "../screens/ecommerce/detail";
 import { ProductLightBox } from "../screens/ecommerce/product-light-box";
+import { HomeScreen } from "../screens/home/home";
+import { OperatorScreen } from "../screens/operator/operator";
+import ScanQrScreen from "../screens/operator/scan-qr";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -43,7 +46,27 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator>
-      {user ? (
+      {
+      user ? user.userType === "Худалдагч" ? <>
+      <Stack.Screen
+        component={OperatorScreen}
+        name={NavigationRoutes.OperatorScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        component={ScanQrScreen}
+        name={NavigationRoutes.ScanQrScreen}
+        options={{
+          headerShown: false,
+          animation: "fade",
+          gestureEnabled: true,
+          presentation: "containedTransparentModal",
+        }}
+      />
+      </> 
+      : (
         <>
           <Stack.Screen
             component={BottomTabNavigator}
@@ -120,20 +143,18 @@ function RootNavigator() {
           />
           {/* <Stack.Screen component={NewScreen} name={NavigationRoutes.NewScreen} options={articleDetailScreen} /> */}
         </>
-      ) : (
-        <>
-          <Stack.Screen
-            component={LoginScreen}
-            name={NavigationRoutes.LoginScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            component={SignUpScreen}
-            name={NavigationRoutes.SignUpScreen}
-            options={{ headerShown: false }}
-          />
-        </>
-      )}
+      ) :   <>
+      <Stack.Screen
+        component={LoginScreen}
+        name={NavigationRoutes.LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        component={SignUpScreen}
+        name={NavigationRoutes.SignUpScreen}
+        options={{ headerShown: false }}
+      />
+    </>}
     </Stack.Navigator>
   );
 }

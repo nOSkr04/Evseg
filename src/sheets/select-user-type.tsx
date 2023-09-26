@@ -37,6 +37,7 @@ const SelectUserType = memo(({ route }: Props) => {
         name: "Хэрэглэгч",
             icon: "person-outline"
         },
+      
     ]
 
     const renderItems = useCallback(({ item, index }: { item: { name: string , icon: string}, index: number }) => {

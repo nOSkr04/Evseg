@@ -1,5 +1,5 @@
-import { Dimensions, StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React, { memo, useCallback } from "react";
+import { Dimensions, StyleSheet, Text, View, TouchableOpacity, ScrollView, RefreshControl } from "react-native";
+import React, { memo, useCallback, useState } from "react";
 import { AppBar } from "../../components/app-bar";
 import { IUser } from "../../interface/user";
 import useSwr from "swr"
@@ -10,13 +10,23 @@ import { NavigationRoutes } from "../../navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import Animated  from "react-native-reanimated";
 import QRCode from "react-native-qrcode-svg";
+
 const { width } = Dimensions.get("screen")
 
 const HomeScreen = memo(() => {
-  const { data } = useSwr<IUser>("swr.user.me", async () => {
+  const [refreshing, setRefreshing] = useState(false);
+  const { data, mutate } = useSwr<IUser>("swr.user.me", async () => {
     return await AuthApi.me();
   });
   const navigation = useNavigation();
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    mutate();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, []);
 
   const onLightBox = useCallback(() => {
     navigation.navigate(NavigationRoutes.QrLightBox)
@@ -25,8 +35,10 @@ const HomeScreen = memo(() => {
   return (
     <>
       <AppBar />
-      <View style={styles.root}>
-        <Animated.Text style={styles.scanMe} sharedTransitionTag="qrTitle"  >QR УНШУУЛАХ</Animated.Text>
+      <ScrollView style={styles.root} refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <Animated.Text style={styles.scanMe} sharedTransitionTag="qrTitle">QR УНШУУЛАХ</Animated.Text>
         <View style={styles.container}>
           <View style={styles.qrContainer}>
             <TouchableOpacity onPress={onLightBox} style={styles.qrContent} >
@@ -67,7 +79,7 @@ const HomeScreen = memo(() => {
             </TouchableOpacity>
           }
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 });

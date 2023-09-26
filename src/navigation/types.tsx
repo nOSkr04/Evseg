@@ -32,6 +32,8 @@ export enum NavigationRoutes {
   QrLightBox= "QrLightBox",
   ProductDetailScreen= "ProductDetailScreen",
   ProductLightBox= "ProductLightBox",
+  OperatorScreen= "OperatorScreen",
+  ScanQrScreen= "ScanQrScreen",
 }
 
 export type RootStackParamList = {
@@ -46,14 +48,15 @@ export type RootStackParamList = {
   QrLightBox: undefined;
   ProductDetailScreen: {item:ProductType};
   ProductLightBox: {data: string[], indexNumber: number};
+  HomeScreen:undefined;
+  OperatorScreen: undefined;
+  ScanQrScreen: undefined;
 };
 
 export type RootTabParamList = {
   HomeScreen: undefined;
   ProfileScreen: undefined;
   EcommerceScreen: undefined;
-
-
 };
 
 export type BottomSheetParamList = {

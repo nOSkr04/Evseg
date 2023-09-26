@@ -1,13 +1,12 @@
 import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { memo, useCallback, useState } from 'react'
+import React, { memo,  useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationRoutes, RootStackParamList } from '../../navigation/types';
 import Animated from 'react-native-reanimated';
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { AntDesign, Entypo, Fontisto, MaterialIcons } from "@expo/vector-icons"
+import { AntDesign, Entypo, Fontisto,  } from "@expo/vector-icons"
 import { Colors } from '../../constants/colors';
 import { Carousel } from '../../components/carousel';
 import { priceBrief } from '../../utils/price-brief';
@@ -31,20 +30,10 @@ const ProductDetail = memo(({ route }: Props) => {
   const [count, setCount] = useState(1)
   const [selectSize, setSelectSize] = useState("M");
   const [selectColor, setSelectColor] = useState("gray")
-  const sf = useSafeAreaInsets();
   const navigation = useNavigation();
 
-  const safeTop = useCallback(() => {
-    return {
-      marginTop: sf.top,
-    }
-  }, [])
 
-  const positionTop = useCallback(() => {
-    return {
-      top: sf.top + 16,
-    }
-  }, [])
+
 
   const addCount = () => {
     setCount(count + 1)
@@ -64,7 +53,7 @@ const ProductDetail = memo(({ route }: Props) => {
   return (
     <>
        <AppBar leading title={data.name}/>
-      <View style={[safeTop(), styles.root]}>
+      <View style={styles.root}>
         <View>
           <Carousel initialIndex={0} width={width} showIndicator={true}>
             {data.imgs.map((item, index) => {
@@ -160,7 +149,7 @@ const styles = StyleSheet.create({
   root: {
     backgroundColor: Colors.bg,
     flex: 1,
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   imgs: {
     width,

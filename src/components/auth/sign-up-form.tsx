@@ -172,7 +172,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
       {errors.userType && (
         <Text style={styles.errorText}>Заавал сонгоно уу</Text>
       )}
-      {/* {userType === "Жолооч" ? 
+      {userType === "Жолооч" ? 
         <>
           <Text style={styles.title}>Банк</Text>
           <Controller
@@ -253,7 +253,7 @@ const SignUpForm = ({ control, errors, getValues }: Props) => {
           <Text style={styles.errorText}>Заавал оруулна уу</Text>
         )}
       </> : null
-      } */}
+      }
       <Text style={styles.title}>Шинэ нууц үг</Text>
       <Controller
         control={control}
