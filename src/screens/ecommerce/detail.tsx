@@ -11,6 +11,7 @@ import { AntDesign, Entypo, Fontisto, MaterialIcons } from "@expo/vector-icons"
 import { Colors } from '../../constants/colors';
 import { Carousel } from '../../components/carousel';
 import { priceBrief } from '../../utils/price-brief';
+import { AppBar } from '../../components/app-bar';
 type Props = NativeStackScreenProps<RootStackParamList, NavigationRoutes.ProductDetailScreen>;
 
 const AniamtedImage = Animated.createAnimatedComponent(Image);
@@ -62,9 +63,7 @@ const ProductDetail = memo(({ route }: Props) => {
 
   return (
     <>
-      <Pressable onPress={() => navigation.goBack()} style={[styles.backContainer, positionTop()]}>
-        <AntDesign name="arrowleft" size={24} color={Colors.black} />
-      </Pressable>
+       <AppBar leading title={data.name}/>
       <View style={[safeTop(), styles.root]}>
         <View>
           <Carousel initialIndex={0} width={width} showIndicator={true}>
