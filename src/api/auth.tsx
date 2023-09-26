@@ -4,12 +4,12 @@ import { HttpRequest } from "../utils";
 const httpRequest = new HttpRequest();
 
 export const me = async () => {
-  const res = await httpRequest.get("/users/me");
+  const res = await httpRequest.get("/user/me");
   return res.data;
 };
 
-export const login = async (data: { name: string, password: string }) => {
-  const res = await httpRequest.post("/users/login", data);
+export const login = async (data: { phone: string, password: string }) => {
+  const res = await httpRequest.post("/user/login", data);
   return res;
 };
 export const deleteUser = async (id: string) => {
@@ -38,4 +38,3 @@ export const logout = async () => {
   const res = await httpRequest.get("/user/logout");
   return res;
 };
-

@@ -4,7 +4,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import { Colors } from "../../constants/colors";
 
 export type IFormData = {
-  name: string;
+  phone: string;
   password: string;
 };
 
@@ -22,7 +22,7 @@ const LoginForm = ({ control, errors }: Props) => {
       <Text style={styles.title}>Нэвтрэх нэр</Text>
       <Controller
         control={control}
-        name="name"
+        name="phone"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             placeholder="Нэвтрэх нэр"

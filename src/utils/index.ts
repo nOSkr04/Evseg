@@ -5,7 +5,7 @@ import { authLogout } from "../store/auth-slice";
 export class HttpRequest extends BaseHttpRequest {
   // uri = "http://192.168.1.23:8001/api/v1api/v1";
   // uri = "http://192.168.1.62:3000";
-  uri = "https://seduback.com/api/v1";
+  uri = "http://159.223.69.222";
   
   store = store;
   errorHandler = (statusCode: number, error: HttpHandler): void => {
