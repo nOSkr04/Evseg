@@ -8,7 +8,7 @@ import {
   View,
   Text,
 } from "react-native";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { Image } from "expo-image";
 import LoginForm, { IFormData } from "../../components/auth/login-form";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { NavigationRoutes } from "../../navigation/types";
 import { Colors } from "../../constants/colors";
 const LoginScreen = memo(() => {
+  const [err, setErr] = useState()
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {
@@ -33,7 +34,7 @@ const LoginScreen = memo(() => {
       const res = await AuthApi.login(data);
       dispatch(authLogin(res));
     } catch (err: any) {
-      console.log(err)
+      setErr(err)
       setError("root", {
         type: err.statusCode,
       });
@@ -59,6 +60,9 @@ const LoginScreen = memo(() => {
           </View>
           <View style={styles.loginForm}>
             <LoginForm control={control} errors={errors} />
+            {err &&
+              <Text>{JSON.stringify(err)}</Text>
+            }
             {errors.root?.type === 401 && (
               <Text style={styles.errorText}>
                 Нэвтрэх нэр нууц үг буруу байна
@@ -78,7 +82,7 @@ const LoginScreen = memo(() => {
                 Бүртгэл байхгүй юу ?
               </Text>
               <TouchableOpacity onPress={() => navigation.navigate(NavigationRoutes.SignUpScreen)}>
-                <Text style={styles.registerButtonText}>  БҮРТГҮҮЛЭХ</Text>
+                <Text style={styles.registerButtonText}>БҮРТГҮҮЛЭХ.</Text>
               </TouchableOpacity>
             </View>
           </View>
