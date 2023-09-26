@@ -2,7 +2,7 @@
   "expo": {
     "name": "Evseg",
     "slug": "Evseg",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "mn.evseg",
-      "buildNumber": "0.0.1"
+      "buildNumber": "0.0.3"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "mn.evseg",
-      "versionCode": 1,
+      "versionCode": 3,
       "permissions": [
         "CAMERA",
         "WRITE_EXTERNAL_STORAGE",
