@@ -14,4 +14,5 @@ export abstract class Colors {
   static grey = "#707070";
   static blue = '#366efa';
   static green = 'green';
+  static cool = '#35354f';
 }

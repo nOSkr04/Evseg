@@ -1,5 +1,5 @@
-import {  StyleSheet, TouchableOpacity, View, Text, ScrollView } from "react-native";
-import React, { memo,  } from "react";
+import { StyleSheet, TouchableOpacity, View, Text, ScrollView } from "react-native";
+import React, { memo, } from "react";
 import { AuthApi } from "../../api";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import IonIcons from "@expo/vector-icons/Ionicons";
@@ -31,64 +31,66 @@ const ProfileScreen = memo(() => {
   };
   console.log(data)
   return (
-    <ScrollView style={styles.root}>
+    <>
       <AppBar title="Миний мэдээлэл" />
-      <TouchableOpacity style={styles.profile} onPress={() => navigation.navigate(NavigationRoutes.EditProfile)}>
-        <View style={styles.option}>
-          {/* <View style={styles.circleAvatar} /> */}
-          <Image source={require("../../../assets/logo.png")} style={styles.circleAvatar}  contentFit="cover"  />
-          <View >
-            <Text style={styles.profileName}>{data?.lastName} {data?.firstName}</Text>
-            <Text style={styles.userType}>{data?.userType}</Text>
+      <ScrollView style={styles.root}>
+        <TouchableOpacity style={styles.profile} onPress={() => navigation.navigate(NavigationRoutes.EditProfile)}>
+          <View style={styles.option}>
+            {/* <View style={styles.circleAvatar} /> */}
+            <Image source={require("../../../assets/logo.png")} style={styles.circleAvatar} contentFit="cover" />
+            <View >
+              <Text style={styles.profileName}>{data?.lastName} {data?.firstName}</Text>
+              <Text style={styles.userType}>{data?.userType}</Text>
+            </View>
           </View>
+          <Feather name="edit" size={24} color={Colors.grey} />
+        </TouchableOpacity>
+        <View style={styles.account}>
+          <Text style={styles.description}>Мэдээлэл</Text>
+          <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.AddBank)}>
+            <View style={styles.passwordChangeContainer}>
+              <IonIcons name="md-card" size={24} color={Colors.white} />
+            </View>
+            <Text style={styles.setting}>
+              Данс нэмэх
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.TransactionHistory)}>
+            <View style={styles.passwordChangeContainer}>
+              <MaterialCommunityIcons name="bank" size={24} color={Colors.white} />
+            </View>
+            <Text style={styles.setting}>
+              Гүйлгээний түүх
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.ChangePassword)}>
+            <View style={styles.passwordChangeContainer}>
+              <Entypo name="key" size={24} color={Colors.white} />
+            </View>
+            <Text style={styles.setting}>
+              Нууц үг солих
+            </Text>
+          </TouchableOpacity>
         </View>
-        <Feather name="edit" size={24} color={Colors.grey} />
-      </TouchableOpacity>
-      <View style={styles.account}>
-        <Text style={styles.description}>Мэдээлэл</Text>
-        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.AddBank)}>
-          <View style={styles.passwordChangeContainer}>
-            <IonIcons name="md-card" size={24} color={Colors.white} />
-          </View>
-          <Text style={styles.setting}>
-            Данс нэмэх 
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.TransactionHistory)}>
-          <View style={styles.passwordChangeContainer}>
-            <MaterialCommunityIcons name="bank" size={24} color={Colors.white} />
-          </View>
-          <Text style={styles.setting}>
-            Гүйлгээний түүх
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(NavigationRoutes.ChangePassword)}>
-          <View style={styles.passwordChangeContainer}>
-            <Entypo name="key" size={24} color={Colors.white} />
-          </View>
-          <Text style={styles.setting}>
-            Нууц үг солих
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.account}>
-        <Text style={styles.description}>Аккаунт удирдлага</Text>
-        <TouchableOpacity style={styles.logoutContainer}>
-          <Text style={styles.call}>
-            Холбоо барих
-          </Text>
-          <IonIcons name="call" size={16} color={Colors.grey}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.logoutContainer} onPress={logout}>
-          <Text style={styles.deleteAccountText}>Бүртгэл устгах</Text>
-          <AntDesign name="deleteuser" color={Colors.blue} size={16} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={logout} style={styles.logoutContainer}>
-          <Text style={styles.logoutText}>Гарах</Text>
-          <AntDesign name="logout" color={Colors.danger} size={16} />
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        <View style={styles.account}>
+          <Text style={styles.description}>Аккаунт удирдлага</Text>
+          <TouchableOpacity style={styles.logoutContainer}>
+            <Text style={styles.call}>
+              Холбоо барих
+            </Text>
+            <IonIcons name="call" size={16} color={Colors.grey} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.logoutContainer} onPress={logout}>
+            <Text style={styles.deleteAccountText}>Бүртгэл устгах</Text>
+            <AntDesign name="deleteuser" color={Colors.blue} size={16} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={logout} style={styles.logoutContainer}>
+            <Text style={styles.logoutText}>Гарах</Text>
+            <AntDesign name="logout" color={Colors.danger} size={16} />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </>
   );
 });
 
@@ -196,7 +198,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   root: {
-    backgroundColor:Colors.bg,
+    backgroundColor: Colors.bg,
 
     flex: 1,
   },

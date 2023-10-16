@@ -8,6 +8,8 @@ import { Colors } from "../constants/colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { AnimatedTabBar } from "../components/tab-bar/animated-tab-bar";
 import { EcommerceScreen } from "../screens/ecommerce/ecommerce";
+import { BasketScreen } from "../screens/basket-screen/basket-screen";
+import Entypo from "@expo/vector-icons/Entypo";
 const BottomTabNavigator = () => {
   const BottomTab = createBottomTabNavigator<RootTabParamList>();
   return (
@@ -24,7 +26,13 @@ const BottomTabNavigator = () => {
       <BottomTab.Screen
         component={EcommerceScreen}
         name={NavigationRoutes.EcommerceScreen}
-        options={{ tabBarIcon : () => <FontAwesome color={Colors.black} name="shopping-cart" size={24}  />,
+        options={{ tabBarIcon : () => <Entypo color={Colors.black} name="shop" size={24}  />,
+        headerShown: false,}}
+      />
+      <BottomTab.Screen
+        component={BasketScreen}
+        name={NavigationRoutes.BasketScreen}
+        options={{ tabBarIcon : () => <FontAwesome color={Colors.black} name="shopping-cart" size={24}   />,
         headerShown: false,}}
       />
       <BottomTab.Screen
@@ -33,6 +41,7 @@ const BottomTabNavigator = () => {
         options={{ tabBarIcon : () => <FontAwesome color={Colors.black} name="user" size={24}  />,
         headerShown: false,}}
       />
+      
     </BottomTab.Navigator>
   );
 };

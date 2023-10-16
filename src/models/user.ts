@@ -11,7 +11,7 @@ export class User implements IUser {
   regNumber: string
   role: string
   transactionAmount: number
-  userType: string
+  userType: ["DRIVER", "CUSTOMER", "GUIDE"]
   email: string
   constructor({
     _id,

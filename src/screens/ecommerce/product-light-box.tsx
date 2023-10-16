@@ -8,7 +8,8 @@ import Animated from 'react-native-reanimated';
 import { Image } from 'expo-image';
 import { Carousel } from '../../components/carousel';
 import { Colors } from '../../constants/colors';
-import {AntDesign} from "@expo/vector-icons"
+import {AntDesign} from "@expo/vector-icons";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 type Props = NativeStackScreenProps<RootStackParamList, NavigationRoutes.ProductLightBox>;
 const AnimatedImage = Animated.createAnimatedComponent(Image)
 
@@ -23,11 +24,11 @@ const ProductLightBox = memo(({ route }: Props) => {
     <LightBox onClosed={() => navigation.goBack()} LightHeaderComponent={
     <View style={styles.header}>
        <Pressable onPress={() => navigation.goBack()} style={styles.backContainer}>
-        <AntDesign name="arrowleft" size={24} color={Colors.black} />
+        <AntDesign name="arrowleft" size={24} color={Colors.white} />
       </Pressable>
       <Text style={styles.title}>{currentIndex + 1} / {data.length}</Text>
       <Pressable style={styles.backContainer2}>
-        <AntDesign name="arrowleft" size={24} color={Colors.black} />
+        <MaterialIcons name="keyboard-arrow-left" size={24} color={Colors.black} />
       </Pressable>
     </View>
   }>
@@ -63,7 +64,6 @@ const styles = StyleSheet.create({
     marginHorizontal:16
   },
   backContainer: {
-    backgroundColor: Colors.white,
     alignItems: "center",
     justifyContent: "center",
     padding: 8,

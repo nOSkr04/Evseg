@@ -18,7 +18,7 @@ const QrLightBox = memo(() => {
         <LightBox onClosed={() => navigation.goBack()} LightHeaderComponent={
             <View style={styles.header}>
                 <Pressable onPress={() => navigation.goBack()} style={styles.backContainer}>
-                    <AntDesign name="arrowleft" size={24} color={Colors.black} />
+                    <AntDesign name="arrowleft" size={24} color={Colors.white} />
                 </Pressable>
                 <Animated.Text style={styles.title} sharedTransitionTag="qrTitle">QR УНШУУЛАХ</Animated.Text>
                 <Pressable style={styles.backContainer2}>
@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 16
     },
     backContainer: {
-        backgroundColor: Colors.white,
         alignItems: "center",
         justifyContent: "center",
         padding: 8,

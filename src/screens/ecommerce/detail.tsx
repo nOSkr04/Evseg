@@ -1,16 +1,18 @@
-import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { memo,  useState } from 'react'
+import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
+import React, { memo, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationRoutes, RootStackParamList } from '../../navigation/types';
 import Animated from 'react-native-reanimated';
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
 
-import { AntDesign, Entypo, Fontisto,  } from "@expo/vector-icons"
+import { AntDesign, Entypo, Fontisto, } from "@expo/vector-icons"
 import { Colors } from '../../constants/colors';
 import { Carousel } from '../../components/carousel';
 import { priceBrief } from '../../utils/price-brief';
 import { AppBar } from '../../components/app-bar';
+import Feather from '@expo/vector-icons/Feather';
+
 type Props = NativeStackScreenProps<RootStackParamList, NavigationRoutes.ProductDetailScreen>;
 
 const AniamtedImage = Animated.createAnimatedComponent(Image);
@@ -52,8 +54,8 @@ const ProductDetail = memo(({ route }: Props) => {
 
   return (
     <>
-       <AppBar leading title={data.name}/>
-      <View style={styles.root}>
+      <AppBar leading title={data.name} />
+      <ScrollView style={styles.root}>
         <View>
           <Carousel initialIndex={0} width={width} showIndicator={true}>
             {data.imgs.map((item, index) => {
@@ -63,7 +65,7 @@ const ProductDetail = memo(({ route }: Props) => {
                   onPress={() => navigation.navigate(NavigationRoutes.ProductLightBox, { data: data.imgs, indexNumber: index })}
                   style={styles.imageContainer}
                 >
-                  <AniamtedImage source={item} style={[styles.imgs]} sharedTransitionTag={item} contentFit={"contain"} />
+                  <AniamtedImage source={item} style={[styles.imgs]} sharedTransitionTag={item} contentFit={"cover"} />
                 </Pressable>)
             })}
           </Carousel>
@@ -92,7 +94,6 @@ const ProductDetail = memo(({ route }: Props) => {
                   )
                 })}
               </View>
-
             </View>
             <View style={styles.detail}>
               <Text style={styles.detailTitle}>Өнгө</Text>
@@ -106,20 +107,19 @@ const ProductDetail = memo(({ route }: Props) => {
                   return (
                     <Pressable style={[styles.colorContainer, colors()]} key={color} onPress={() => setSelectColor(color)}>
                       {color === selectColor &&
-                        <Entypo name='check' size={20} color={Colors.fbPrimary} />
+                        <Entypo name='check' size={20} color={Colors.bgs} />
                       }
                     </Pressable>
                   )
                 })}
               </View>
-
             </View>
           </View>
         </View>
+        <Text style={styles.description}>
+          Одоогоос 150 гаруй жилийн тэртээ Францын хаан гуравдугаар Наполеон эхнэртээ ховор нандин ороолт бэлэглэжээ. Бүр нэгийг бус арван долоон ширхгийг бэлэглэсний учир юунд байв? Хатан хаан Эжени зөөлөн тансаг уг алчуураа магтахдаа "хуримын бөгжин дундуур гүйлгэхэд гарч ирэхээр тийм нимгэн" хэмээснээс загварын түүхэнд "бөгжинд багтах ороолт" гэж нэршсэн энэхүү алчуур цэвэр ноолууран ороолт байв. Түүний өмссөн зүүсэн бүхэн Францын язгууртан дунд улмаар бусад Европын орнуудад эрэлттэй зүйл болдог байсан тул ноолуур ийнхүү Европын тансаг хэрэглээнд анх нэвтэрсэн нь XIX зуун.
+        </Text>
         <View style={styles.bottomContainer}>
-          <View style={styles.basketContainer}>
-            <Fontisto name="shopping-basket-add" size={16} color={Colors.white} />
-          </View>
           <View style={styles.bottomContent}>
             <View style={styles.incrementContainer}>
               <TouchableOpacity style={styles.buttonContainer} onPress={minusCount}>
@@ -136,7 +136,11 @@ const ProductDetail = memo(({ route }: Props) => {
             </View>
           </View>
         </View>
-      </View>
+        <TouchableOpacity style={styles.basketContainer}>
+          <Feather name="shopping-cart" size={16} color={Colors.white} />
+          <Text style={styles.buyText}>Худалдаж авах</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </>
   )
 })
@@ -147,18 +151,28 @@ export { ProductDetail }
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: Colors.bg,
+    backgroundColor: Colors.white,
     flex: 1,
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
+  },
+  description:{
+    marginHorizontal: 15,
+    color: Colors.grey,
+    marginVertical: 5,
   },
   imgs: {
     width,
     height: 400,
   },
   imageContainer: {
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: Colors.bgs,
     height: 400,
-
+  },
+  buyText: {
+    marginLeft: 10,
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: '500',
   },
   container: {
     flexDirection: "row",
@@ -180,6 +194,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 10
   },
+
   detailContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -201,16 +216,23 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   sizeContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: "#acacac",
     padding: 8,
-    borderRadius: 8,
+    borderRadius: 100,
+    height: 45,
+    width: 45,
     marginRight: 4
   },
   selectedSize: {
-    backgroundColor: Colors.fbPrimary,
-    padding: 8,
-    borderRadius: 8,
-    marginRight: 4
+    width: 45,
+    height: 45,
+    borderRadius: 100,
+    marginRight: 4,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Colors.bgs,
   },
   sizeRoot: {
     flexDirection: "row",
@@ -222,18 +244,16 @@ const styles = StyleSheet.create({
     fontFamily: "MonBold",
     color: Colors.white
   },
-
   colorContainer: {
-    width: 32,
-    height: 36,
-    borderRadius: 8,
+    width: 45,
+    height: 45,
+    borderRadius: 100,
     marginRight: 4,
     alignItems: "center",
     justifyContent: "center"
   },
   bottomContainer: {
     backgroundColor: Colors.white,
-    paddingBottom: 50,
     paddingHorizontal: 16
   },
   incrementContainer: {
@@ -243,15 +263,19 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     padding: 4,
-    backgroundColor: "#acacac",
+    // backgroundColor: "#acacac",
     borderRadius: 4
   },
   basketContainer: {
+    marginTop: 15,
+    flexDirection: 'row',
+    marginBottom: 25,
     padding: 16,
-    alignSelf: "center",
-    backgroundColor: Colors.fbPrimary,
-    borderRadius: 100,
-    bottom: 20
+    marginLeft: 15,
+    alignSelf: "flex-start",
+    backgroundColor: Colors.bgs,
+    borderRadius: 15,
+    bottom: 0
   },
   minusTitle: {
     fontFamily: "MonBold",
@@ -282,7 +306,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     zIndex: 999,
     padding: 8,
-    borderRadius:8
+    borderRadius: 8
   }
 
 

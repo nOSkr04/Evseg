@@ -4,6 +4,8 @@ import { AppBar } from '../../components/app-bar'
 import { ProductContainer } from '../../components/ecommerce/product-container'
 import { FadeOutDown, ZoomInEasyDown } from 'react-native-reanimated'
 import { Stagger } from '../../components/animate/stagger'
+import { ScrollView } from 'react-native-gesture-handler'
+import { BasketCard } from '../../components/basket-card/basket-card'
 
 export type ProductType = {
   _id: string,
@@ -14,7 +16,8 @@ export type ProductType = {
   category: string
 }
 
-const EcommerceScreen = memo(() => {
+const BasketScreen = memo(() => {
+
   const data = [
     {
       _id: "1",
@@ -29,26 +32,28 @@ const EcommerceScreen = memo(() => {
     },
     { _id: "3", img: "https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912160447_95c47f62dd831a1888877a0634280588.JPG", imgs: ["https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912160447_95c47f62dd831a1888877a0634280588.JPG", "https://cdn.greensoft.mn/uploads/site/1176/photos/module_product/20230912160459_5c3955a4861bcc31e93ddd96422588de.JPG"], name: "Пальто", price: 1489000, category: "Эрэгтэй" }
   ]
-  const renderItem = useCallback(({ item }: { item: ProductType }) => {
+
+  const renderItem = useCallback(({item} : {item: ProductType}) => {
     return (
+     
       <Stagger
-        stagger={50}
-        duration={100}
-        exitDirection={-1}
-        entering={() => ZoomInEasyDown.springify()}
-        exiting={() => FadeOutDown.springify()}
-      >
-        <ProductContainer item={item} />
-      </Stagger>
+      stagger={50}
+      duration={100}
+      exitDirection={-1}
+      entering={() => ZoomInEasyDown.springify()}
+      exiting={() => FadeOutDown.springify()}
+    >
+       <BasketCard item={item}/>
+    </Stagger>
     )
   }, [])
+
   return (
     <>
-      <AppBar title="Цахим дэлгүүр" />
+      <AppBar title="Сагс" />
       <FlatList
         data={data}
         renderItem={renderItem}
-        numColumns={2}
         keyExtractor={item => item._id}
         style={styles.container}
         showsVerticalScrollIndicator={false}
@@ -57,12 +62,13 @@ const EcommerceScreen = memo(() => {
   )
 })
 
-EcommerceScreen.displayName = "EcommerceScreen"
+BasketScreen.displayName = "BasketScreen"
 
-export { EcommerceScreen }
+export { BasketScreen }
 
 const styles = StyleSheet.create({
   container: {
+    marginHorizontal: 15,
     flex: 1,
     alignSelf: 'center',
   }
