@@ -39,7 +39,7 @@ const ProductLightBox = memo(({ route }: Props) => {
       >
         {data.map((e) => {
           return (
-            <AnimatedImage key={e} source={e} style={styles.img} sharedTransitionTag={e} contentFit={"contain"} />
+            <AnimatedImage key={e.url} source={e.url} style={styles.img} sharedTransitionTag={e.url} contentFit={"contain"} />
           );
         })}
       </Carousel>

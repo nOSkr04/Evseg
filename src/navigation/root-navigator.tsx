@@ -47,7 +47,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       {
-      user ? user.userType === "Худалдагч" ? <>
+      user ? user.role === "operator" ? <>
       <Stack.Screen
         component={OperatorScreen}
         name={NavigationRoutes.OperatorScreen}

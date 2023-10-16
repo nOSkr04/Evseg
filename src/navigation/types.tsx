@@ -1,12 +1,9 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ProductType } from "../screens/ecommerce/ecommerce";
 
 
 
@@ -47,8 +44,8 @@ export type RootStackParamList = {
   ChangePassword: undefined;
   Transaction: undefined;
   QrLightBox: undefined;
-  ProductDetailScreen: {item:ProductType};
-  ProductLightBox: {data: string[], indexNumber: number};
+  ProductDetailScreen: {id:string};
+  ProductLightBox: {data: {url: string, blurHash: string}[], indexNumber: number};
   HomeScreen:undefined;
   OperatorScreen: undefined;
   ScanQrScreen: undefined;

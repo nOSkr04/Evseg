@@ -12,6 +12,8 @@ import { Carousel } from '../../components/carousel';
 import { priceBrief } from '../../utils/price-brief';
 import { AppBar } from '../../components/app-bar';
 import Feather from '@expo/vector-icons/Feather';
+import useSWR from 'swr';
+import { ProductApi } from '../../api';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationRoutes.ProductDetailScreen>;
 
@@ -28,7 +30,11 @@ const colored = [
 ]
 
 const ProductDetail = memo(({ route }: Props) => {
-  const { item: data } = route.params
+  const { id } = route.params;
+  const {data} = useSWR(`product.${id}`,async () => {
+    const res = ProductApi.getProduct(id);
+    return res
+  })
   const [count, setCount] = useState(1)
   const [selectSize, setSelectSize] = useState("M");
   const [selectColor, setSelectColor] = useState("gray")
@@ -47,27 +53,29 @@ const ProductDetail = memo(({ route }: Props) => {
     }
     setCount(count - 1)
   }
-
-
-
+if(!data){
+  return null
+}
 
 
   return (
     <>
-      <AppBar leading title={data.name} />
+      <AppBar leading title={data?.name} />
       <ScrollView style={styles.root}>
         <View>
           <Carousel initialIndex={0} width={width} showIndicator={true}>
-            {data.imgs.map((item, index) => {
+            <View>
+            {data?.images.map((item, index) => {
               return (
                 <Pressable
                   key={index}
-                  onPress={() => navigation.navigate(NavigationRoutes.ProductLightBox, { data: data.imgs, indexNumber: index })}
+                  onPress={() => navigation.navigate(NavigationRoutes.ProductLightBox, { data: data.images, indexNumber: index })}
                   style={styles.imageContainer}
                 >
-                  <AniamtedImage source={item} style={[styles.imgs]} sharedTransitionTag={item} contentFit={"cover"} />
+                  <AniamtedImage source={item.url} placeholder={item.blurHash} style={[styles.imgs]} sharedTransitionTag={item.url} contentFit={"cover"}  />
                 </Pressable>)
             })}
+                  </View>
           </Carousel>
           <View style={styles.container}>
             <View>

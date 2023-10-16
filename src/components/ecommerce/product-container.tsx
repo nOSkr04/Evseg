@@ -4,29 +4,28 @@ import { Image } from 'expo-image'
 import { Colors } from '../../constants/colors'
 import { useNavigation } from '@react-navigation/native'
 import { NavigationRoutes } from '../../navigation/types'
-import { ProductType } from '../../screens/ecommerce/ecommerce'
 import { priceBrief } from '../../utils/price-brief'
+import { IProduct } from '../../interface/product'
+import useSWR from 'swr'
 
 const width = Dimensions.get("window").width
 
 
-const ProductContainer = memo(({ item }: { item: ProductType }) => {
+const ProductContainer = memo(({ item }: { item: IProduct }) => {
+    const {data} = useSWR(`product.${item._id}`, {fallbackData: item})
     const navigation = useNavigation();
     const onDetail = useCallback(() => {
-        navigation.navigate(NavigationRoutes.ProductDetailScreen, { item })
-    }, [])
+        navigation.navigate(NavigationRoutes.ProductDetailScreen, { id: data._id })
+    }, []);
     return (
         <Pressable style={styles.container} onPress={onDetail}>
-            <Image source={item.img} style={styles.image} contentFit='cover' />
+            <Image source={data.image.url} placeholder={data.image.blurHash} style={styles.image} contentFit='cover' />
             <Text style={styles.price}>
-                {item.name}
+                {data.name}
             </Text>
             <Text style={styles.title}>
-                {priceBrief(item.price)}
+                {priceBrief(data.price)}
             </Text>
-            {/* <View style={styles.button}>
-                <Text style={styles.buttonTitle}>Сагслах</Text>
-            </View> */}
         </Pressable>
     )
 })
