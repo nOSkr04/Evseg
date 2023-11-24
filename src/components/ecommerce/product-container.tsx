@@ -7,26 +7,34 @@ import { NavigationRoutes } from '../../navigation/types'
 import { priceBrief } from '../../utils/price-brief'
 import { IProduct } from '../../interface/product'
 import useSWR from 'swr'
+import MaterrialIcons from "@expo/vector-icons/MaterialIcons"
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { ProductApi } from '../../api'
 
 const width = Dimensions.get("window").width
 
 
 const ProductContainer = memo(({ item }: { item: IProduct }) => {
-    const {data} = useSWR(`product.${item._id}`, {fallbackData: item})
+    const { data } = useSWR(`product.${item._id}`, { fallbackData: item })
     const navigation = useNavigation();
     const onDetail = useCallback(() => {
         navigation.navigate(NavigationRoutes.ProductDetailScreen, { id: data._id })
     }, []);
     return (
-        <Pressable style={styles.container} onPress={onDetail}>
-            <Image source={data.image.url} placeholder={data.image.blurHash} style={styles.image} contentFit='cover' />
-            <Text style={styles.price}>
-                {data.name}
-            </Text>
-            <Text style={styles.title}>
-                {priceBrief(data.price)}
-            </Text>
-        </Pressable>
+        <View>
+            <TouchableOpacity style={styles.container} onPress={onDetail}>
+                <Image source={data.image?.url} placeholder={data.image?.blurHash} style={styles.image} contentFit='cover' />
+                <Text style={styles.price}>
+                    {priceBrief(data.price)}
+                </Text>
+                <Text style={styles.title} numberOfLines={1}> 
+                    {data.name}
+                </Text>
+                <Text style={styles.description} numberOfLines={2}>
+                    {data.description}
+                </Text>
+            </TouchableOpacity>
+        </View>
     )
 })
 
@@ -49,7 +57,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         padding: 6,
         borderRadius: 10,
-        marginTop: 8
+        marginTop: 8,
+
     },
     image: {
         borderRadius: 10,
@@ -57,15 +66,23 @@ const styles = StyleSheet.create({
         height: 200,
         backgroundColor: Colors.black
     },
-    title: {
-        fontFamily: 'MonMedium',
-        marginBottom: 12,
-    },
     price: {
-        marginVertical: 8,
+        fontFamily: 'MonSemiBold',
+        marginTop: 5,
+        fontSize: 16,
+        color: Colors.black,
+    },
+    title: {
+        color: Colors.black,
+        marginVertical: 5,
+        fontFamily: "MonMedium",
+        fontSize: 13,
+    },
+    description: {
         color: 'grey',
         fontFamily: "MonMedium",
-        fontSize: 12
+        fontSize: 12,
+        marginBottom: 12,
     },
     button: {
         backgroundColor: Colors.fbPrimary,

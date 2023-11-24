@@ -1,5 +1,5 @@
 import { Dimensions, Pressable, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
-import React, { memo, useState } from 'react'
+import React, { memo, useState, useCallback } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationRoutes, RootStackParamList } from '../../navigation/types';
 import Animated from 'react-native-reanimated';
@@ -17,7 +17,7 @@ import { ProductApi } from '../../api';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationRoutes.ProductDetailScreen>;
 
-const AniamtedImage = Animated.createAnimatedComponent(Image);
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 const { width } = Dimensions.get("window")
 
 
@@ -31,21 +31,25 @@ const colored = [
 
 const ProductDetail = memo(({ route }: Props) => {
   const { id } = route.params;
-  const {data} = useSWR(`product.${id}`,async () => {
+  const { data } = useSWR(`products.${id}`, async () => {
     const res = ProductApi.getProduct(id);
-    return res
+    return res;
   })
   const [count, setCount] = useState(1)
-  const [selectSize, setSelectSize] = useState("M");
-  const [selectColor, setSelectColor] = useState("gray")
+  const [selectSize, setSelectSize] = useState(`${data?.size[0]}`);
+  const [selectColor, setSelectColor] = useState(`${data?.color[0]}`)
   const navigation = useNavigation();
-
-
-
-
   const addCount = () => {
-    setCount(count + 1)
+    if (count !== data?.availableCount) {
+      setCount(count + 1)
+    }
   }
+
+  const colorBorder = useCallback((color: string) => {
+    return {
+      borderColor: color === selectColor ? selectColor : Colors.transparent,
+    }
+  }, [selectColor])
 
   const minusCount = () => {
     if (count === 1) {
@@ -53,9 +57,12 @@ const ProductDetail = memo(({ route }: Props) => {
     }
     setCount(count - 1)
   }
-if(!data){
-  return null
-}
+
+
+  console.log(data?.availableCount, "lol??????")
+  if (!data) {
+    return null
+  }
 
 
   return (
@@ -63,19 +70,19 @@ if(!data){
       <AppBar leading title={data?.name} />
       <ScrollView style={styles.root}>
         <View>
-          <Carousel initialIndex={0} width={width} showIndicator={true}>
+          <Carousel initialIndex={0} width={width} showIndicator={true} >
             <View>
-            {data?.images.map((item, index) => {
-              return (
-                <Pressable
-                  key={index}
-                  onPress={() => navigation.navigate(NavigationRoutes.ProductLightBox, { data: data.images, indexNumber: index })}
-                  style={styles.imageContainer}
-                >
-                  <AniamtedImage source={item.url} placeholder={item.blurHash} style={[styles.imgs]} sharedTransitionTag={item.url} contentFit={"cover"}  />
-                </Pressable>)
-            })}
-                  </View>
+              {data?.images?.map((item, index) => {
+                return (
+                  <Pressable
+                    key={index}
+                    onPress={() => navigation.navigate(NavigationRoutes.ProductLightBox, { data: data.images, indexNumber: index })}
+                    style={styles.imageContainer}
+                  >
+                    <AnimatedImage source={item.url} placeholder={item.blurHash} style={[styles.imgs]} sharedTransitionTag={item.url} contentFit={"cover"} />
+                  </Pressable>)
+              })}
+            </View>
           </Carousel>
           <View style={styles.container}>
             <View>
@@ -83,7 +90,7 @@ if(!data){
                 {data.name}
               </Text>
               <Text style={styles.price}>
-                {data.category}
+                {data.category.name}
               </Text>
             </View>
             <Pressable >
@@ -94,7 +101,7 @@ if(!data){
             <View style={styles.detail}>
               <Text style={styles.detailTitle}>Хэмжээ</Text>
               <View style={styles.sizeRoot}>
-                {sizes.map((size) => {
+                {data?.size.map((size) => {
                   return (
                     <Pressable style={size === selectSize ? styles.selectedSize : styles.sizeContainer} key={size} onPress={() => setSelectSize(size)}>
                       <Text style={styles.sizeTitle}>{size}</Text>
@@ -106,18 +113,17 @@ if(!data){
             <View style={styles.detail}>
               <Text style={styles.detailTitle}>Өнгө</Text>
               <View style={styles.sizeRoot}>
-                {colored.map((color) => {
+                {data.color.map((color) => {
                   const colors = () => {
                     return {
                       backgroundColor: color
                     }
                   }
                   return (
-                    <Pressable style={[styles.colorContainer, colors()]} key={color} onPress={() => setSelectColor(color)}>
-                      {color === selectColor &&
-                        <Entypo name='check' size={20} color={Colors.bgs} />
-                      }
-                    </Pressable>
+                    <View key={color} style={[styles.colorBorder, colorBorder(color)]}>
+                      <Pressable style={[styles.colorContainer, colors()]} key={color} onPress={() => setSelectColor(color)}>
+                      </Pressable>
+                    </View>
                   )
                 })}
               </View>
@@ -125,7 +131,7 @@ if(!data){
           </View>
         </View>
         <Text style={styles.description}>
-          Одоогоос 150 гаруй жилийн тэртээ Францын хаан гуравдугаар Наполеон эхнэртээ ховор нандин ороолт бэлэглэжээ. Бүр нэгийг бус арван долоон ширхгийг бэлэглэсний учир юунд байв? Хатан хаан Эжени зөөлөн тансаг уг алчуураа магтахдаа "хуримын бөгжин дундуур гүйлгэхэд гарч ирэхээр тийм нимгэн" хэмээснээс загварын түүхэнд "бөгжинд багтах ороолт" гэж нэршсэн энэхүү алчуур цэвэр ноолууран ороолт байв. Түүний өмссөн зүүсэн бүхэн Францын язгууртан дунд улмаар бусад Европын орнуудад эрэлттэй зүйл болдог байсан тул ноолуур ийнхүү Европын тансаг хэрэглээнд анх нэвтэрсэн нь XIX зуун.
+          {data.description}
         </Text>
         <View style={styles.bottomContainer}>
           <View style={styles.bottomContent}>
@@ -146,7 +152,7 @@ if(!data){
         </View>
         <TouchableOpacity style={styles.basketContainer}>
           <Feather name="shopping-cart" size={16} color={Colors.white} />
-          <Text style={styles.buyText}>Худалдаж авах</Text>
+          <Text style={styles.buyText}>Барааг сагслах</Text>
         </TouchableOpacity>
       </ScrollView>
     </>
@@ -158,12 +164,17 @@ ProductDetail.displayName = 'ProductDetail'
 export { ProductDetail }
 
 const styles = StyleSheet.create({
+  colorBorder: {
+    padding: 3,
+    borderWidth: 1.5,
+    borderRadius: 100,
+  },
   root: {
     backgroundColor: Colors.white,
     flex: 1,
     // justifyContent: "space-between",
   },
-  description:{
+  description: {
     marginHorizontal: 15,
     color: Colors.grey,
     marginVertical: 5,
@@ -204,19 +215,14 @@ const styles = StyleSheet.create({
   },
 
   detailContainer: {
-    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginHorizontal: 16,
   },
   detail: {
     backgroundColor: Colors.white,
-    borderRadius: 8,
-    width: width / 2 - 20,
-    padding: 8,
     marginRight: 8,
     marginTop: 16
-
   },
   detailTitle: {
     fontSize: 16,
@@ -245,7 +251,6 @@ const styles = StyleSheet.create({
   sizeRoot: {
     flexDirection: "row",
     justifyContent: "space-evenly",
-
   },
   sizeTitle: {
     fontSize: 16,
@@ -253,12 +258,11 @@ const styles = StyleSheet.create({
     color: Colors.white
   },
   colorContainer: {
-    width: 45,
-    height: 45,
+    width: 30,
+    height: 30,
     borderRadius: 100,
-    marginRight: 4,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   bottomContainer: {
     backgroundColor: Colors.white,

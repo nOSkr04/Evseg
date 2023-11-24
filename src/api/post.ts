@@ -1,6 +1,4 @@
-import { ICommentData } from "../components/post/post-input";
-import { IPost } from "../interface/post";
-import { Comment } from "../models/comment";
+import { IPost } from "../interface/post"
 import { Post } from "../models/post";
 import { Result } from "../models/result";
 import { HttpRequest } from "../utils";
@@ -48,10 +46,7 @@ export const getComments = async (id: string) => {
   return res.data;
 };
 
-export const postComment = async ({ id, values } : {id: string, values: ICommentData}) => {
-  const res = await httpRequest.post(`/comments/${id}`, values );
-  return Comment.fromJson(res.data);
-};
+
 
 
 

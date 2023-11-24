@@ -32,7 +32,7 @@ const BasketCard = memo(({ item }: { item: ProductType }) => {
 
     const navigation = useNavigation();
     const onDetail = useCallback(() => {
-        navigation.navigate(NavigationRoutes.ProductDetailScreen, {item})
+        navigation.navigate(NavigationRoutes.ProductDetailScreen, {id:item._id})
     }, [])
 
 

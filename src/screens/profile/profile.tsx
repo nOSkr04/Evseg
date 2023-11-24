@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'MonMedium',
     color: Colors.danger,
+    marginBottom: 10,
   },
   deleteAccount: {
     textAlign: 'right',

@@ -21,7 +21,11 @@ export class Product implements IProduct {
       url: string
     },
   ];
-  category:string
+  category: {
+    __v: string,
+    name: string,
+    id: string,
+  }
   constructor({
     _id,
     name,

@@ -18,6 +18,7 @@ export type ProductType = {
 }
 
 const EcommerceScreen = memo(() => {
+  
   const { data, size, setSize, isLoading, } = useSWRInfinite(
     index => `product.${index}`,
     async index => {
@@ -27,6 +28,8 @@ const EcommerceScreen = memo(() => {
     },
     { revalidateAll: true },
   );
+  console.log(data)
+
 
   const renderItem = useCallback(({ item }: { item: IProduct }) => {
     return (
