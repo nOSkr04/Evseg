@@ -4,16 +4,16 @@ import { HttpRequest } from "../utils";
 const httpRequest = new HttpRequest();
 
 export const me = async () => {
-  const res = await httpRequest.get("/user/me");
+  const res = await httpRequest.get("/users/me");
   return res.data;
 };
 
 export const login = async (data: { phone: string, password: string }) => {
-  const res = await httpRequest.post("/user/login", data);
+  const res = await httpRequest.post("/users/login", data);
   return res;
 };
 export const deleteUser = async (id: string) => {
-  const res = await httpRequest.del(`/user/${id}`);
+  const res = await httpRequest.del(`/users/${id}`);
   return res;
 };
 export const signUp = async (data: {
@@ -26,15 +26,15 @@ export const signUp = async (data: {
   phone: string,
   userType: string,
 }) => {
-  const res = await httpRequest.post("/user/register", data);
+  const res = await httpRequest.post("/users/register", data);
   return res;
 };
 
 export const editProfile = async({data, id} : {data: IEditForm, id: string}) => {
-  const res = await httpRequest.put(`/user/${id}`, data)
+  const res = await httpRequest.put(`/users/${id}`, data)
 }
 
 export const logout = async () => {
-  const res = await httpRequest.get("/user/logout");
+  const res = await httpRequest.get("/users/logout");
   return res;
 };
