@@ -5,29 +5,21 @@ import { NavigationRoutes, RootStackParamList } from '../../navigation/types';
 import Animated from 'react-native-reanimated';
 import { Image } from 'expo-image';
 import { useNavigation } from '@react-navigation/native';
-
-import { AntDesign, Entypo, Fontisto, } from "@expo/vector-icons"
+import { AntDesign } from "@expo/vector-icons"
 import { Colors } from '../../constants/colors';
-import { Carousel } from '../../components/carousel';
 import { priceBrief } from '../../utils/price-brief';
 import { AppBar } from '../../components/app-bar';
 import Feather from '@expo/vector-icons/Feather';
 import useSWR from 'swr';
 import { ProductApi } from '../../api';
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
+import { Carousel } from '../../components/carousel/carousel';
+import { ProductLightBox } from './product-light-box';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationRoutes.ProductDetailScreen>;
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 const { width } = Dimensions.get("window")
-
-
-const sizes = [
-  "S", "M", "L", "XL"
-]
-
-const colored = [
-  "gray", "black", "pink", "blue"
-]
 
 const ProductDetail = memo(({ route }: Props) => {
   const { id } = route.params;
@@ -44,6 +36,15 @@ const ProductDetail = memo(({ route }: Props) => {
       setCount(count + 1)
     }
   }
+
+  const [selectImage, setSelectImage] = useState("")
+
+  const imageBorder = useCallback((id: string) => {
+    return {
+      borderWidth: selectImage === id ? 1 : 0,
+      borderColor: selectImage === id ? Colors.black : Colors.transparent,
+    }
+  }, [selectImage])
 
   const colorBorder = useCallback((color: string) => {
     return {
@@ -64,26 +65,22 @@ const ProductDetail = memo(({ route }: Props) => {
     return null
   }
 
+  console.log(data.images, " a")
+
 
   return (
     <>
       <AppBar leading title={data?.name} />
       <ScrollView style={styles.root}>
         <View>
-          <Carousel initialIndex={0} width={width} showIndicator={true} >
-            <View>
-              {data?.images?.map((item, index) => {
-                return (
-                  <Pressable
-                    key={index}
-                    onPress={() => navigation.navigate(NavigationRoutes.ProductLightBox, { data: data.images, indexNumber: index })}
-                    style={styles.imageContainer}
-                  >
-                    <AnimatedImage source={item.url} placeholder={item.blurHash} style={[styles.imgs]} sharedTransitionTag={item.url} contentFit={"cover"} />
-                  </Pressable>)
-              })}
-            </View>
-          </Carousel>
+          <Carousel data={data.images} />
+          <ScrollView horizontal={true} style={styles.horizontalContainer}>
+            {
+              data.images.map((item, index) => <TouchableOpacity key={index} onPress={() => setSelectImage(item._id)}>
+                <Image source={item.url} placeholder={item.blurHash} style={[styles.mainProduct, imageBorder(item._id)]} />
+              </TouchableOpacity>)
+            }
+          </ScrollView>
           <View style={styles.container}>
             <View>
               <Text style={styles.title}>
@@ -97,36 +94,17 @@ const ProductDetail = memo(({ route }: Props) => {
               <AntDesign name='heart' color={Colors.danger} size={18} />
             </Pressable>
           </View>
-          <View style={styles.detailContainer}>
-            <View style={styles.detail}>
-              <Text style={styles.detailTitle}>Хэмжээ</Text>
-              <View style={styles.sizeRoot}>
-                {data?.size.map((size) => {
-                  return (
-                    <Pressable style={size === selectSize ? styles.selectedSize : styles.sizeContainer} key={size} onPress={() => setSelectSize(size)}>
-                      <Text style={styles.sizeTitle}>{size}</Text>
-                    </Pressable>
-                  )
-                })}
-              </View>
-            </View>
-            <View style={styles.detail}>
-              <Text style={styles.detailTitle}>Өнгө</Text>
-              <View style={styles.sizeRoot}>
-                {data.color.map((color) => {
-                  const colors = () => {
-                    return {
-                      backgroundColor: color
-                    }
-                  }
-                  return (
-                    <View key={color} style={[styles.colorBorder, colorBorder(color)]}>
-                      <Pressable style={[styles.colorContainer, colors()]} key={color} onPress={() => setSelectColor(color)}>
-                      </Pressable>
-                    </View>
-                  )
-                })}
-              </View>
+
+          <View style={styles.detail}>
+            <Text style={styles.detailTitle}>Хэмжээ</Text>
+            <View style={styles.sizeRoot}>
+              {data?.size.map((size) => {
+                return (
+                  <Pressable style={size === selectSize ? styles.selectedSize : styles.sizeContainer} key={size} onPress={() => setSelectSize(size)}>
+                    <Text style={size === selectSize ? styles.selectedText : styles.sizeTitle}>{size.toUpperCase()}</Text>
+                  </Pressable>
+                )
+              })}
             </View>
           </View>
         </View>
@@ -136,11 +114,11 @@ const ProductDetail = memo(({ route }: Props) => {
         <View style={styles.bottomContainer}>
           <View style={styles.bottomContent}>
             <View style={styles.incrementContainer}>
-              <TouchableOpacity style={styles.buttonContainer} onPress={minusCount}>
+              <TouchableOpacity style={styles.quantityContainer} onPress={minusCount}>
                 <AntDesign name="minus" size={24} color="black" />
               </TouchableOpacity>
               <Text style={styles.minusTitle}>{count}</Text>
-              <TouchableOpacity style={styles.buttonContainer} onPress={addCount}>
+              <TouchableOpacity style={styles.quantityContainer} onPress={addCount}>
                 <AntDesign name="plus" size={24} color="black" />
               </TouchableOpacity>
             </View>
@@ -150,10 +128,16 @@ const ProductDetail = memo(({ route }: Props) => {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.basketContainer}>
-          <Feather name="shopping-cart" size={16} color={Colors.white} />
-          <Text style={styles.buyText}>Барааг сагслах</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.basketContainer}>
+            <Feather name="shopping-cart" size={16} color={Colors.white} />
+            <Text style={styles.basketText}>Барааг сагслах</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buyContainer}>
+            <MaterialCommunityIcons name="bank-transfer" size={22} color={Colors.bgs} />
+            <Text style={styles.buyText}>Худалдан авах</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </>
   )
@@ -164,6 +148,12 @@ ProductDetail.displayName = 'ProductDetail'
 export { ProductDetail }
 
 const styles = StyleSheet.create({
+  mainProduct: {
+    paddingHorizontal: 15,
+    height: 150,
+    width: 90,
+    borderRadius: 10,
+  },
   colorBorder: {
     padding: 3,
     borderWidth: 1.5,
@@ -173,6 +163,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     flex: 1,
     // justifyContent: "space-between",
+  },
+  horizontalContainer: {
+    gap: 5,
+    paddingHorizontal: 15,
   },
   description: {
     marginHorizontal: 15,
@@ -187,9 +181,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgs,
     height: 400,
   },
-  buyText: {
+  basketText: {
     marginLeft: 10,
     color: Colors.white,
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  buyText: {
+    marginLeft: 10,
+    color: Colors.bgs,
     fontSize: 14,
     fontWeight: '500',
   },
@@ -220,9 +220,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   detail: {
+    marginLeft: 15,
     backgroundColor: Colors.white,
     marginRight: 8,
-    marginTop: 16
+    marginTop: 16,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   detailTitle: {
     fontSize: 16,
@@ -232,21 +235,23 @@ const styles = StyleSheet.create({
   sizeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#acacac",
+    backgroundColor: Colors.bgs,
     padding: 8,
-    borderRadius: 100,
+    borderRadius: 10,
     height: 45,
     width: 45,
-    marginRight: 4
+    marginRight: 4,
   },
   selectedSize: {
     width: 45,
     height: 45,
-    borderRadius: 100,
+    borderRadius: 10,
     marginRight: 4,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.bgs,
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.bgs,
   },
   sizeRoot: {
     flexDirection: "row",
@@ -256,6 +261,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "MonBold",
     color: Colors.white
+  },
+  selectedText: {
+    fontSize: 16,
+    fontFamily: "MonBold",
+    color: Colors.bgs,
   },
   colorContainer: {
     width: 30,
@@ -273,21 +283,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
 
   },
-  buttonContainer: {
+  quantityContainer: {
     padding: 4,
     // backgroundColor: "#acacac",
     borderRadius: 4
   },
-  basketContainer: {
+
+  buttonContainer: {
     marginTop: 15,
-    flexDirection: 'row',
     marginBottom: 25,
-    padding: 16,
-    marginLeft: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    bottom: 0,
+  },
+  buyContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 46,
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    alignSelf: "flex-start",
+    backgroundColor: Colors.white,
+    borderWidth: 1,
+    borderColor: Colors.bgs,
+    borderRadius: 15,
+  },
+  basketContainer: {
+    height: 46,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    flexDirection: 'row',
     alignSelf: "flex-start",
     backgroundColor: Colors.bgs,
     borderRadius: 15,
-    bottom: 0
   },
   minusTitle: {
     fontFamily: "MonBold",

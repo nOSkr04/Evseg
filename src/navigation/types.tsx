@@ -4,6 +4,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { IImage } from "../interface/image";
 
 
 
@@ -45,7 +46,7 @@ export type RootStackParamList = {
   Transaction: undefined;
   QrLightBox: undefined;
   ProductDetailScreen: {id:string};
-  ProductLightBox: {data: {url: string, blurHash: string}[], indexNumber: number};
+  ProductLightBox: {data: IImage[], indexNumber: number};
   HomeScreen:undefined;
   OperatorScreen: undefined;
   ScanQrScreen: undefined;

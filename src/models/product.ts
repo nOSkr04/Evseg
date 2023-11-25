@@ -1,3 +1,4 @@
+import { IImage } from "../interface/image";
 import { IProduct } from "../interface/product";
 import { ScopedMutator } from "swr/_internal";
 export class Product implements IProduct {
@@ -11,15 +12,9 @@ export class Product implements IProduct {
     type: boolean
   };
   availableCount: number
-  image: {
-    blurHash: string
-    url: string
-  };
+  image: IImage;
   images: [
-    {
-      blurHash: string
-      url: string
-    },
+    IImage,
   ];
   category: {
     __v: string,
