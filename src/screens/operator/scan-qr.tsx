@@ -6,7 +6,7 @@ import { Colors } from "../../constants/colors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NavigationRoutes } from "../../navigation/types";
 import AntDesign from "@expo/vector-icons/AntDesign"
-const {width, height} = Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
 const ScanQrScreen = memo(() => {
   const [hasPermission, setHasPermission] = useState<boolean | string | null>(null);
@@ -23,32 +23,37 @@ const ScanQrScreen = memo(() => {
     getBarCodeScannerPermissions();
   }, []);
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
+    console.log(data)
     setScanned(true);
-   
+
   };
 
   const top = useCallback(() => {
-    return{
-      paddingTop: sf.top
+    return {
+      top: sf.top + 30
     }
-  },[])
+  }, [])
   if (hasPermission === null) {
     return <Text>Requesting for camera permission</Text>;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
   return (
-    <View style={[styles.container, top()]}>
-      <Pressable style={styles.backButtonContainer} onPress={() => navigation.goBack()}>
-      <AntDesign name="left" color={Colors.black} size={18} />
+    <View style={[styles.container,]}>
+      <Pressable style={[styles.backButtonContainer, top()]} onPress={() => navigation.goBack()}>
+        <AntDesign name="left" color={Colors.black} size={18} />
       </Pressable>
-      <View style={styles.barcodeContainer}>
-        <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={styles.barcode} />
+      <BarCodeScanner onBarCodeScanned={scanned ? undefined : handleBarCodeScanned} style={StyleSheet.absoluteFillObject} />
+      <View style={[StyleSheet.absoluteFill]}>
+        <View style={[styles.scanOverlay, { top: 0, left: 0, width: '25%', bottom: 0 }]} />
+        <View style={[styles.scanOverlay, { top: 0, left: '25%', right: '25%', height: '38%' }]} />
+        <View style={[styles.scanOverlay, { bottom: 0, left: '25%', right: '25%', height: '38%' }]} />
+        <View style={[styles.scanOverlay, { top: 0, right: 0, width: '25%', bottom: 0 }]} />
       </View>
-      <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.OperatorScreen)}>
-              <Text style={styles.registerButtonText}>Qr уншуулах</Text>
-            </TouchableOpacity>
+      
+    
     </View>
   );
 });
@@ -59,23 +64,27 @@ export default ScanQrScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex           : 1,
+    flex: 1,
     backgroundColor: "rgba(0,0,0,0.8)",
   },
-  backButtonContainer:{
-    padding:8,
-    backgroundColor:Colors.white,
-    alignSelf:"flex-start",
-    marginHorizontal:25,
-    marginVertical:16,
-    borderRadius:4
+  scanOverlay: {
+    position: 'absolute',
+    backgroundColor: "rgba(0,0,0,0.8)",
+  },
+  backButtonContainer: {
+    padding: 8,
+    backgroundColor: Colors.white,
+    alignSelf: "flex-start",
+    borderRadius: 4,
+    position: "absolute",
+    left: 10,
+    zIndex: 2
   },
   barcodeContainer: {
-    marginHorizontal: 16,
-    height          : height * 0.75,
+    flex: 1
   },
   barcode: {
-    width : "100%",
+    width: "100%",
     height: "100%",
   },
   transactionButton: {

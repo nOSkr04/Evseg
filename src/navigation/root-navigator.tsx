@@ -47,114 +47,114 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       {
-      user ? user.role === "operator" ? <>
-      <Stack.Screen
-        component={OperatorScreen}
-        name={NavigationRoutes.OperatorScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        component={ScanQrScreen}
-        name={NavigationRoutes.ScanQrScreen}
-        options={{
-          headerShown: false,
-          animation: "fade",
-          gestureEnabled: true,
-          presentation: "containedTransparentModal",
-        }}
-      />
-      </> 
-      : (
-        <>
+        user ? user.role === "OPERATOR" ? <>
           <Stack.Screen
-            component={BottomTabNavigator}
-            name={NavigationRoutes.Root}
+            component={OperatorScreen}
+            name={NavigationRoutes.OperatorScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            component={ScanQrScreen}
+            name={NavigationRoutes.ScanQrScreen}
+            options={{
+              headerShown: false,
+              animation: "fade",
+              gestureEnabled: true,
+              presentation: "containedTransparentModal",
+            }}
+          />
+        </>
+          : (
+            <>
+              <Stack.Screen
+                component={BottomTabNavigator}
+                name={NavigationRoutes.Root}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                component={EditProfile}
+                name={NavigationRoutes.EditProfile}
+                options={{
+                  headerShown: false,
+                  fullScreenGestureEnabled: true
+                }}
+              />
+              <Stack.Screen
+                component={AddBank}
+                name={NavigationRoutes.AddBank}
+                options={{
+                  headerShown: false,
+                  fullScreenGestureEnabled: true
+                }}
+              />
+              <Stack.Screen
+                component={TransactionHistory}
+                name={NavigationRoutes.TransactionHistory}
+                options={{
+                  headerShown: false,
+                  fullScreenGestureEnabled: true
+                }}
+              />
+              <Stack.Screen
+                component={ChangePassword}
+                name={NavigationRoutes.ChangePassword}
+                options={{
+                  headerShown: false,
+                  fullScreenGestureEnabled: true
+                }}
+              />
+              <Stack.Screen
+                component={Transaction}
+                name={NavigationRoutes.Transaction}
+                options={{
+                  headerShown: false,
+                  fullScreenGestureEnabled: true
+                }}
+              />
+              <Stack.Screen
+                component={ProductDetail}
+                name={NavigationRoutes.ProductDetailScreen}
+                options={{
+                  headerShown: false,
+                  fullScreenGestureEnabled: true
+                }}
+              />
+              <Stack.Screen
+                name={NavigationRoutes.QrLightBox}
+                component={QrLightBox}
+                options={{
+                  headerShown: false,
+                  animation: "fade",
+                  gestureEnabled: true,
+                  presentation: "containedTransparentModal",
+                }}
+              />
+              <Stack.Screen
+                name={NavigationRoutes.ProductLightBox}
+                component={ProductLightBox}
+                options={{
+                  headerShown: false,
+                  animation: "fade",
+                  gestureEnabled: true,
+                  presentation: "containedTransparentModal",
+                }}
+              />
+              {/* <Stack.Screen component={NewScreen} name={NavigationRoutes.NewScreen} options={articleDetailScreen} /> */}
+            </>
+          ) : <>
+          <Stack.Screen
+            component={LoginScreen}
+            name={NavigationRoutes.LoginScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            component={EditProfile}
-            name={NavigationRoutes.EditProfile}
-            options={{
-              headerShown: false,
-              fullScreenGestureEnabled: true
-            }}
+            component={SignUpScreen}
+            name={NavigationRoutes.SignUpScreen}
+            options={{ headerShown: false }}
           />
-          <Stack.Screen
-            component={AddBank}
-            name={NavigationRoutes.AddBank}
-            options={{
-              headerShown: false,
-              fullScreenGestureEnabled: true
-            }}
-          />
-          <Stack.Screen
-            component={TransactionHistory}
-            name={NavigationRoutes.TransactionHistory}
-            options={{
-              headerShown: false,
-              fullScreenGestureEnabled: true
-            }}
-          />
-          <Stack.Screen
-            component={ChangePassword}
-            name={NavigationRoutes.ChangePassword}
-            options={{
-              headerShown: false,
-              fullScreenGestureEnabled: true
-            }}
-          />
-          <Stack.Screen
-            component={Transaction}
-            name={NavigationRoutes.Transaction}
-            options={{
-              headerShown: false,
-              fullScreenGestureEnabled: true
-            }}
-          />
-          <Stack.Screen
-            component={ProductDetail}
-            name={NavigationRoutes.ProductDetailScreen}
-            options={{
-              headerShown: false,
-              fullScreenGestureEnabled: true
-            }}
-          />
-          <Stack.Screen
-            name={NavigationRoutes.QrLightBox}
-            component={QrLightBox}
-            options={{
-              headerShown: false,
-              animation: "fade",
-              gestureEnabled: true,
-              presentation: "containedTransparentModal",
-            }}
-          />
-          <Stack.Screen
-            name={NavigationRoutes.ProductLightBox}
-            component={ProductLightBox}
-            options={{
-              headerShown: false,
-              animation: "fade",
-              gestureEnabled: true,
-              presentation: "containedTransparentModal",
-            }}
-          />
-          {/* <Stack.Screen component={NewScreen} name={NavigationRoutes.NewScreen} options={articleDetailScreen} /> */}
-        </>
-      ) :   <>
-      <Stack.Screen
-        component={LoginScreen}
-        name={NavigationRoutes.LoginScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        component={SignUpScreen}
-        name={NavigationRoutes.SignUpScreen}
-        options={{ headerShown: false }}
-      />
-    </>}
+        </>}
     </Stack.Navigator>
   );
 }
