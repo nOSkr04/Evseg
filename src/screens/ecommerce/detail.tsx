@@ -49,7 +49,7 @@ const ProductDetail = memo(({ route }: Props) => {
 
     try {
       const res = await BasketApi.addBasket(createData)
-      console.log(res, "gg")
+      navigation.goBack();
     } catch(err){
       console.log(err)
     }

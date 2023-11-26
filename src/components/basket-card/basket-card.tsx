@@ -18,6 +18,8 @@ const width = Dimensions.get("window").width
 
 const BasketCard = memo(({ item }: { item: ProductType }) => {
 
+    console.log(item, "itemBasket");
+
     const [count, setCount] = useState(1);
 
     const addCount = () => {
@@ -39,16 +41,14 @@ const BasketCard = memo(({ item }: { item: ProductType }) => {
     return (
         <TouchableOpacity onPress={onDetail} style={styles.container}>
             <View style={styles.imageContainer}>
-                <Image source={item.img} style={styles.image} contentFit='cover' />
+                <Image source={item.img?.url} style={styles.image} contentFit='cover' />
             </View>
             <View style={styles.descriptionContainer}>
-
                 <Text style={styles.name}>{item.name}</Text>
-
                 <View style={styles.subContainer}>
                     <View>
                         <Text style={styles.name}>{item.size}</Text>
-                        <Text style={styles.price}>{item.price.toLocaleString()}₮</Text>
+                        <Text style={styles.price}>{item.price}₮</Text>
                     </View>
                     <View style={styles.quantityContainer}>
                         <TouchableOpacity onPress={minus} style={styles.countContainer}>
@@ -61,8 +61,6 @@ const BasketCard = memo(({ item }: { item: ProductType }) => {
                     </View>
                 </View>
             </View>
-
-
         </TouchableOpacity>
     )
 })

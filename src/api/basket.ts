@@ -1,18 +1,16 @@
-import { IPost } from './../interface/post';
-import { HttpRequest } from "../helper";
-import { Post } from '../models/post';
-import { Result } from '../models/result';
-import { IProduct } from '../interface/product';
+import { IProduct } from "../interface/product";
+import { Product } from "../models/product";
+import { Result } from "../models/result";
+import { HttpRequest } from "../utils";
 
 const httpRequest = new HttpRequest();
 
 export const getBaskets = async ({ page, limit }: { page: number, limit: number }) => {
-    const {  data } = await httpRequest.get("/baskets", { page: page, limit: limit, sort: "-createdAt" });
-    return data
+    const  data  = await httpRequest.get("/baskets", { page: page, limit: limit, sort: "-createdAt" });
+    return data;
 }
 
 export const addBasket = async (data: {quantity: number, productId: string, size: string}) => {
-    console.log(data, "a")
     const res = await httpRequest.post("/baskets", data);
     return res;
 }
