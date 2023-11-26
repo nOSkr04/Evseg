@@ -23,7 +23,6 @@ const ScanQrScreen = memo(() => {
     getBarCodeScannerPermissions();
   }, []);
   const handleBarCodeScanned = async ({ data }: { data: string }) => {
-    console.log(data)
     setScanned(true);
 
   };

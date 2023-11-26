@@ -38,7 +38,7 @@ const BasketCard = memo(({ item }: { item: ProductType }) => {
 
     return (
         <TouchableOpacity onPress={onDetail} style={styles.container}>
-            <View>
+            <View style={styles.imageContainer}>
                 <Image source={item.img} style={styles.image} contentFit='cover' />
             </View>
             <View style={styles.descriptionContainer}>
@@ -47,8 +47,8 @@ const BasketCard = memo(({ item }: { item: ProductType }) => {
 
                 <View style={styles.subContainer}>
                     <View>
-                        <Text style={styles.name}>XL</Text>
-                        <Text style={styles.price}>{item.price}₮</Text>
+                        <Text style={styles.name}>{item.size}</Text>
+                        <Text style={styles.price}>{item.price.toLocaleString()}₮</Text>
                     </View>
                     <View style={styles.quantityContainer}>
                         <TouchableOpacity onPress={minus} style={styles.countContainer}>
@@ -72,7 +72,11 @@ BasketCard.displayName = "BasketCard"
 export { BasketCard }
 
 const styles = StyleSheet.create({
-
+    imageContainer:{
+        borderWidth: 1,
+        borderColor: Colors.lightGrey,
+        borderRadius: 10,
+    },
     container: {
         shadowColor: Colors.grey,
         shadowOffset: {

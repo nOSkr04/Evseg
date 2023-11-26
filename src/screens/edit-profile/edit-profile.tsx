@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View,ScrollView } from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React, { memo } from 'react'
 import { AppBar } from '../../components/app-bar'
 import { Colors } from '../../constants/colors'
-import EditProfileForm, { IEditForm,  } from '../../components/auth/edit-profile-form'
+import EditProfileForm, { IEditForm, } from '../../components/auth/edit-profile-form'
 import { useForm } from 'react-hook-form'
 import { TouchableOpacity } from '@gorhom/bottom-sheet'
 import { useNavigation } from '@react-navigation/native'
@@ -10,7 +10,7 @@ import { AuthApi } from '../../api'
 import useSwr, { useSWRConfig } from "swr"
 import { IUser } from '../../interface/user'
 const EditProfile = memo(() => {
-  const {mutate} = useSWRConfig()
+  const { mutate } = useSWRConfig()
   const { data: user } = useSwr<IUser>("swr.user.me")
   const {
     handleSubmit,
@@ -24,10 +24,10 @@ const EditProfile = memo(() => {
       firstName: user!.firstName,
     }
   });
- 
+
   const onSubmit = async (data: IEditForm) => {
     try {
-      await AuthApi.editProfile({data, id: user!._id });
+      await AuthApi.editProfile({ data, id: user!._id });
       navigation.goBack();
       mutate("swr.user.me")
     } catch (err: any) {
@@ -39,17 +39,17 @@ const EditProfile = memo(() => {
   const navigation = useNavigation();
   return (
     <View >
+      <AppBar leading title='Тохиргоо' />
       <ScrollView>
-        <AppBar leading title='Тохиргоо' />
         <View>
           <View style={styles.circleAvatar} />
           <Text style={styles.username}>{user?.lastName} {user?.firstName}</Text>
           <Text style={styles.userType}>{user?.userType}</Text>
         </View>
         <View style={styles.formContainer}>
-          <EditProfileForm control={control} errors={errors}/>
+          <EditProfileForm control={control} errors={errors} />
         </View>
-        <TouchableOpacity style={styles.button}  onPress={handleSubmit(onSubmit)}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.buttonText}>Солих</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -60,7 +60,7 @@ const EditProfile = memo(() => {
 export { EditProfile }
 
 const styles = StyleSheet.create({
-  input:{
+  input: {
     marginHorizontal: 15,
     borderRadius: 10,
     marginBottom: 10,
@@ -68,12 +68,12 @@ const styles = StyleSheet.create({
     height: 50,
     paddingLeft: 10,
   },
-  buttonText:{
+  buttonText: {
     color: Colors.white,
     fontSize: 15,
     fontFamily: 'MonThin',
   },
-  button:{
+  button: {
     marginTop: 50,
     marginHorizontal: 15,
     alignItems: 'center',
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: Colors.bgs,
   },
-  formContainer:{
+  formContainer: {
     marginTop: 50,
   },
   circleAvatar: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: Colors.border,
   },
-  username:{
+  username: {
     marginTop: 10,
     fontSize: 17,
     fontFamily: "MonSemiBold",

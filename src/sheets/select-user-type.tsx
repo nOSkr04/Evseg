@@ -17,7 +17,6 @@ const SelectUserType = memo(({ route }: Props) => {
     const navigation = useNavigation();
     const changed = useCallback(
         (type: string) => {
-            console.log(type)
             navigation.goBack();
             onChange(type);
         },

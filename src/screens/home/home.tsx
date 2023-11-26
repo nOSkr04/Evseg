@@ -19,7 +19,6 @@ const HomeScreen = memo(() => {
     return await AuthApi.me();
   });
 
-  console.log(data, "a")
   const navigation = useNavigation();
 
   const onRefresh = React.useCallback(() => {
@@ -33,9 +32,9 @@ const HomeScreen = memo(() => {
   const onLightBox = useCallback(() => {
     navigation.navigate(NavigationRoutes.QrLightBox)
   }, [])
-  if(!data){
-    return null
-  }
+  // if(!data){
+  //   return null
+  // }
 
   return (
     <>
@@ -59,7 +58,7 @@ const HomeScreen = memo(() => {
               <View style={styles.rightPoint} />
             </View>
             <View style={styles.pointContainer} >
-              {data.userType === "CUSTOMER" ?
+              {data?.userType === "CUSTOMER" ?
                 <>
                   <Text style={styles.point1}>Эпойнт: </Text>
                   <Text style={styles.point}>
@@ -76,7 +75,7 @@ const HomeScreen = memo(() => {
               }
             </View>
           </View>
-          {data.userType !== "CUSTOMER" &&
+          {data?.userType !== "CUSTOMER" &&
             <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.Transaction)}>
               <AntDesign name="arrowright" color={Colors.transparent} size={16} />
               <Text style={styles.registerButtonText}>Гүйлгээ хийх</Text>

@@ -11,9 +11,10 @@ import { NavigationRoutes } from '../navigation/types'
 type Props = {
     title?: string,
     leading?: ReactNode,
+    category?: ReactNode,
 }
 
-const AppBar = memo(({ title, leading }: Props) => {
+const CategoryAppbar = memo(({ title, category }: Props) => {
     const sf = useSafeAreaInsets();
     const navigation = useNavigation();
 
@@ -22,51 +23,24 @@ const AppBar = memo(({ title, leading }: Props) => {
             return {
                 paddingTop: sf.top + 10,
                 paddingBottom: 10,
-                paddingHorizontal: 16,
                 backgroundColor: Colors.white,
             }
         },
         [],
     )
-    if (leading && title) {
-        return (
-            <>
-                <View style={[styles.root, containerStyle()]}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backArrow}>
-                        <MaterialIcons name='arrow-back-ios' size={20} />
-                    </TouchableOpacity>
-                    <Text style={styles.title}>{title}</Text>
-                    <MaterialIcons name='arrow-back-ios' size={20} color={Colors.transparent} />
-                </View>
-            </>
-
-        )
-    }
+    
     return (
-        <View style={containerStyle()}>
-            {/* <Text style={styles.name}>{fullname}</Text> */}
-            {
-                !title ? <View style={styles.root}>
-                    <View>
-                        <Text style={styles.logoStyle}>E V S E G</Text>
-                        <View style={styles.divider} />
-                        <Text style={styles.textStyle}>Mongolian Premium Cashmere</Text>
-                    </View>
-                    <TouchableOpacity style={styles.transaction} onPress={() => navigation.navigate(NavigationRoutes.TransactionHistory)}>
-                        <MaterialCommunityIcons name='bank' size={16} />
-                    </TouchableOpacity>
-                </View> :
-                    <Text style={styles.title}>{title}</Text>
-            }
-
-            {/* <Text>1</Text> */}
+        <View style={[styles.root, containerStyle()]}>
+            <Text style={styles.title}>{title}</Text>
+            <MaterialIcons name='arrow-back-ios' size={20} color={Colors.transparent} />
+            {category}
         </View>
     )
 })
 
-AppBar.displayName = "AppBar"
+CategoryAppbar.displayName = "CategoryAppbar"
 
-export { AppBar }
+export { CategoryAppbar }
 
 const styles = StyleSheet.create({
     backArrow: {
@@ -110,7 +84,6 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     root: {
-        flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
     }

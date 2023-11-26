@@ -21,6 +21,7 @@ import { ProductLightBox } from "../screens/ecommerce/product-light-box";
 import { HomeScreen } from "../screens/home/home";
 import { OperatorScreen } from "../screens/operator/operator";
 import ScanQrScreen from "../screens/operator/scan-qr";
+import { PaymentScreen } from "../screens/payment-screen/payment-screen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -76,6 +77,14 @@ function RootNavigator() {
               <Stack.Screen
                 component={EditProfile}
                 name={NavigationRoutes.EditProfile}
+                options={{
+                  headerShown: false,
+                  fullScreenGestureEnabled: true
+                }}
+              />
+              <Stack.Screen
+                component={PaymentScreen}
+                name={NavigationRoutes.PaymentScreen}
                 options={{
                   headerShown: false,
                   fullScreenGestureEnabled: true

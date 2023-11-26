@@ -5,7 +5,6 @@ import { IUser } from "../interface/user";
 const initialState: IAuth = {
   user    : null,
   token   : null,
-  deadline: null
 };
 
 const authSlice = createSlice({
@@ -19,13 +18,11 @@ const authSlice = createSlice({
     authLogout: (state) => {
       state.user = null;
       state.token = null;
-      state.deadline = null;
       return state;
       
     },
     authMe: (state, { payload }: { payload: IUser}) => {
       state.user = payload;
-      state.deadline = payload.deadline;
       return state;
     }
   },

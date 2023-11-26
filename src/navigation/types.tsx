@@ -5,11 +5,14 @@ import {
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { IImage } from "../interface/image";
+import { ICategory } from "../interface/category";
 
 
 
 
 export enum NavigationRoutes {
+  SelectCategory= "SelectCategory",
+  PaymentScreen = "PaymentScreen",
   Root = "Root",
   LoginScreen = "LoginScreen",
   SignUpScreen = "SignUpScreen",
@@ -50,6 +53,7 @@ export type RootStackParamList = {
   HomeScreen:undefined;
   OperatorScreen: undefined;
   ScanQrScreen: undefined;
+  PaymentScreen: undefined;
 };
 
 export type RootTabParamList = {
@@ -62,6 +66,7 @@ export type RootTabParamList = {
 export type BottomSheetParamList = {
   RootNavigator: undefined;
   TestSheet: undefined;
+  SelectCategory: {onChange:(category: ICategory) => void, id: string}
   SelectBankSheet: {onChange: (bank: string) => void}
   SelectAlphabet: {onChange: (alphabet: string) => void}
   SelectUserType: {onChange: (type: string) => void}

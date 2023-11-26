@@ -8,7 +8,6 @@ type Props = {
 }
 
 const TransactionHIstoryCard = ({ type, amount }: Props) => {
-    console.log(type)
     const types = useCallback(
         () => {
             return {

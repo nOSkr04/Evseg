@@ -12,7 +12,6 @@ type Props = {
 };
 
 const Checkbox = ({isSelected, onClick}: Props) => {
-    console.log(isSelected)
     const backGroundColor = useCallback(() => {
        return {backgroundColor :isSelected == true ? Colors.bgs : 'transparent'}
     }, [isSelected])

@@ -12,6 +12,7 @@ import { SelectBankSheet } from "../sheets/select-bank";
 import { SelectAlphabet } from "../sheets/selec-alphabet";
 import { SelectUserType } from "../sheets/select-user-type";
 import { SelectOwnBankAccount } from "../sheets/select-own-bank-account";
+import { SelectCategory } from "../sheets/select-category";
 
 const BottomSheet = createBottomSheetNavigator<BottomSheetParamList>();
 
@@ -45,7 +46,7 @@ const BottomSheetNavigator = () => {
           topInset: insets.top,
         }}
       />
-       <Screen
+      <Screen
         component={SelectAlphabet}
         name={NavigationRoutes.SelectAlphabet}
         options={{
@@ -55,7 +56,7 @@ const BottomSheetNavigator = () => {
           topInset: insets.top,
         }}
       />
-       <Screen
+      <Screen
         component={SelectUserType}
         name={NavigationRoutes.SelectUserType}
         options={{
@@ -65,12 +66,22 @@ const BottomSheetNavigator = () => {
           topInset: insets.top,
         }}
       />
-       <Screen
+      <Screen
         component={SelectOwnBankAccount}
         name={NavigationRoutes.SelectOwnBankAccount}
         options={{
           backdropComponent: renderBackdrop,
           snapPoints: [300],
+          index: 1,
+          topInset: insets.top,
+        }}
+      />
+      <Screen
+        component={SelectCategory}
+        name={NavigationRoutes.SelectCategory}
+        options={{
+          backdropComponent: renderBackdrop,
+          snapPoints: [150],
           index: 1,
           topInset: insets.top,
         }}

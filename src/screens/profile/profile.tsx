@@ -29,7 +29,6 @@ const ProfileScreen = memo(() => {
       console.log(err);
     }
   };
-  console.log(data)
   return (
     <>
       <AppBar title="Миний мэдээлэл" />

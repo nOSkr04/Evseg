@@ -18,6 +18,7 @@ export type IFormData = {
   alphabet1: string,
   phone: string,
   userType: string,
+  subCategory: string,
 };
 
 type Props = {

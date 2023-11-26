@@ -11,10 +11,11 @@ import { priceBrief } from '../../utils/price-brief';
 import { AppBar } from '../../components/app-bar';
 import Feather from '@expo/vector-icons/Feather';
 import useSWR from 'swr';
-import { ProductApi } from '../../api';
+import { BasketApi, ProductApi } from '../../api';
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 import { Carousel } from '../../components/carousel/carousel';
 import { ProductLightBox } from './product-light-box';
+import { IProduct } from '../../interface/product';
 
 type Props = NativeStackScreenProps<RootStackParamList, NavigationRoutes.ProductDetailScreen>;
 
@@ -23,13 +24,14 @@ const { width } = Dimensions.get("window")
 
 const ProductDetail = memo(({ route }: Props) => {
   const { id } = route.params;
-  const { data } = useSWR(`products.${id}`, async () => {
-    const res = ProductApi.getProduct(id);
+
+  const [selectImage, setSelectImage] = useState("");
+  const { data } = useSWR(`${selectImage}.products.${id}`, async () => {
+    const res = ProductApi.getProduct(id, selectImage);
     return res;
   })
   const [count, setCount] = useState(1)
-  const [selectSize, setSelectSize] = useState(`${data?.size[0]}`);
-  const [selectColor, setSelectColor] = useState(`${data?.color[0]}`)
+  const [selectSize, setSelectSize] = useState(``);
   const navigation = useNavigation();
   const addCount = () => {
     if (count !== data?.availableCount) {
@@ -37,7 +39,24 @@ const ProductDetail = memo(({ route }: Props) => {
     }
   }
 
-  const [selectImage, setSelectImage] = useState("")
+
+  const addCart = useCallback(async () => {
+    const createData = {
+      quantity: count,
+      productId: data!._id,
+      size: selectSize,
+    }
+
+    try {
+      const res = await BasketApi.addBasket(createData)
+      console.log(res, "gg")
+    } catch(err){
+      console.log(err)
+    }
+
+   
+
+  }, [selectSize, count, selectSize])
 
   const imageBorder = useCallback((id: string) => {
     return {
@@ -46,11 +65,6 @@ const ProductDetail = memo(({ route }: Props) => {
     }
   }, [selectImage])
 
-  const colorBorder = useCallback((color: string) => {
-    return {
-      borderColor: color === selectColor ? selectColor : Colors.transparent,
-    }
-  }, [selectColor])
 
   const minusCount = () => {
     if (count === 1) {
@@ -59,14 +73,9 @@ const ProductDetail = memo(({ route }: Props) => {
     setCount(count - 1)
   }
 
-
-  console.log(data?.availableCount, "lol??????")
   if (!data) {
     return null
   }
-
-  console.log(data.images, " a")
-
 
   return (
     <>
@@ -94,14 +103,13 @@ const ProductDetail = memo(({ route }: Props) => {
               <AntDesign name='heart' color={Colors.danger} size={18} />
             </Pressable>
           </View>
-
           <View style={styles.detail}>
             <Text style={styles.detailTitle}>Хэмжээ</Text>
             <View style={styles.sizeRoot}>
-              {data?.size.map((size) => {
+              {data.size.map((item: IProduct) => {
                 return (
-                  <Pressable style={size === selectSize ? styles.selectedSize : styles.sizeContainer} key={size} onPress={() => setSelectSize(size)}>
-                    <Text style={size === selectSize ? styles.selectedText : styles.sizeTitle}>{size.toUpperCase()}</Text>
+                  <Pressable style={item.name === selectSize ? styles.selectedSize : styles.sizeContainer} key={item.name} onPress={() => setSelectSize(item.name)}>
+                    <Text style={item.name === selectSize ? styles.selectedText : styles.sizeTitle}>{item.name.toUpperCase()}</Text>
                   </Pressable>
                 )
               })}
@@ -113,14 +121,17 @@ const ProductDetail = memo(({ route }: Props) => {
         </Text>
         <View style={styles.bottomContainer}>
           <View style={styles.bottomContent}>
-            <View style={styles.incrementContainer}>
-              <TouchableOpacity style={styles.quantityContainer} onPress={minusCount}>
-                <AntDesign name="minus" size={24} color="black" />
-              </TouchableOpacity>
-              <Text style={styles.minusTitle}>{count}</Text>
-              <TouchableOpacity style={styles.quantityContainer} onPress={addCount}>
-                <AntDesign name="plus" size={24} color="black" />
-              </TouchableOpacity>
+            <View>
+              <View style={styles.incrementContainer}>
+                <TouchableOpacity style={styles.quantityContainer} onPress={minusCount}>
+                  <AntDesign name="minus" size={24} color="black" />
+                </TouchableOpacity>
+                <Text style={styles.minusTitle}>{count}</Text>
+                <TouchableOpacity style={styles.quantityContainer} onPress={addCount}>
+                  <AntDesign name="plus" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.quantityText}>Үлдэгдэл : {data.availableCount}</Text>
             </View>
             <View>
               <Text style={styles.priceTitle}>Нийт дүн</Text>
@@ -129,7 +140,7 @@ const ProductDetail = memo(({ route }: Props) => {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.basketContainer}>
+          <TouchableOpacity style={styles.basketContainer} onPress={addCart}>
             <Feather name="shopping-cart" size={16} color={Colors.white} />
             <Text style={styles.basketText}>Барааг сагслах</Text>
           </TouchableOpacity>
@@ -148,6 +159,9 @@ ProductDetail.displayName = 'ProductDetail'
 export { ProductDetail }
 
 const styles = StyleSheet.create({
+  quantityText: {
+    fontFamily: 'MonSemiBold'
+  },
   mainProduct: {
     paddingHorizontal: 15,
     height: 150,
@@ -213,7 +227,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 10
   },
-
   detailContainer: {
     justifyContent: "space-between",
     alignItems: "flex-start",
@@ -288,7 +301,6 @@ const styles = StyleSheet.create({
     // backgroundColor: "#acacac",
     borderRadius: 4
   },
-
   buttonContainer: {
     marginTop: 15,
     marginBottom: 25,
@@ -349,7 +361,4 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8
   }
-
-
-
 })
