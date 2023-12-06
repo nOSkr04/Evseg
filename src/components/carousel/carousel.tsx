@@ -22,11 +22,11 @@ import { NavigationRoutes } from "../../navigation/types";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 
-type Props= {
+type Props = {
   data: IImage[]
 }
 
-const Carousel = memo(({data}: Props) => {
+const Carousel = memo(({ data }: Props) => {
   // const { data } = useSWR<IProduct[]>("swr.banner", async () => {
   //   const {products} = await BannerApi.getBanners();
   //   return products;
@@ -39,10 +39,10 @@ const Carousel = memo(({data}: Props) => {
     height: 218,
   } as const;
 
-  const renderItem = useCallback(({ item }: { item: {url: string, blurHash: string} }) => {
+  const renderItem = useCallback(({ item }: { item: { url: string, blurHash: string } }) => {
     return (
       <View style={styles.flex}>
-        <Image source={item.url} style={styles.image} placeholder={item.blurHash}/>
+        <Image source={item.url} style={styles.image} placeholder={item.blurHash} />
       </View>
     );
   }, []);

@@ -7,12 +7,24 @@ import { IUser } from '../../interface/user'
 import { AuthApi } from '../../api'
 import { useNavigation } from '@react-navigation/native'
 import { NavigationRoutes } from '../../navigation/types'
+import { useDispatch } from 'react-redux'
+import { authLogout } from '../../store/auth-slice'
 
 const OperatorScreen = memo(() => {
     const navigation = useNavigation();
+    const dispatch = useDispatch()
     const { data } = useSWR<IUser>("swr.user.me", async () => {
         return await AuthApi.me();
     });
+
+    const logout = async () => {
+        try {
+          await AuthApi.logout();
+          dispatch(authLogout());
+        } catch (err) {
+          console.log(err);
+        }
+      };
     return (
         <>
             <AppBar />
@@ -20,6 +32,9 @@ const OperatorScreen = memo(() => {
                 <Text style={styles.title}>{data?.lastName} {data?.firstName} - </Text>
                 <Text style={styles.storeTitle}>Их дэлгүүр салбар</Text>
             </View>
+            <TouchableOpacity style={styles.transactionButton} onPress={logout}>
+              <Text style={styles.registerButtonText}>Гарах</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.transactionButton} onPress={() => navigation.navigate(NavigationRoutes.ScanQrScreen)}>
               <Text style={styles.registerButtonText}>Qr уншуулах</Text>
             </TouchableOpacity>

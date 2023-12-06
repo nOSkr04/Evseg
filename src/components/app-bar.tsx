@@ -5,7 +5,8 @@ import { Colors } from '../constants/colors'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { useNavigation } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from '@expo/vector-icons/Feather';
 import { NavigationRoutes } from '../navigation/types'
 
 type Props = {
@@ -52,9 +53,14 @@ const AppBar = memo(({ title, leading }: Props) => {
                         <View style={styles.divider} />
                         <Text style={styles.textStyle}>Mongolian Premium Cashmere</Text>
                     </View>
-                    <TouchableOpacity style={styles.transaction} onPress={() => navigation.navigate(NavigationRoutes.TransactionHistory)}>
-                        <MaterialCommunityIcons name='bank' size={16} />
-                    </TouchableOpacity>
+                    <View style={styles.row}>
+                        <TouchableOpacity style={styles.transaction} onPress={() => navigation.navigate(NavigationRoutes.TransactionHistory)}>
+                            <Ionicons name='search-outline' size={20} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.transaction} onPress={() => navigation.navigate(NavigationRoutes.TransactionHistory)}>
+                            <Ionicons name='notifications-outline' size={20} />
+                        </TouchableOpacity>
+                    </View>
                 </View> :
                     <Text style={styles.title}>{title}</Text>
             }
@@ -72,6 +78,10 @@ const styles = StyleSheet.create({
     backArrow: {
         padding: 10,
     },
+    row: {
+        flexDirection: 'row',
+        gap: 5,
+    },
     title: {
         textAlign: 'center',
         fontSize: 20,
@@ -81,17 +91,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        height: 30,
-        width: 30,
+        height: 45,
+        width: 45,
         backgroundColor: Colors.white,
-        shadowColor: Colors.black,
-        shadowOffset: {
-            width: 2,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        borderColor: Colors.lightGrey,
+        borderWidth: 1,
     },
     textStyle: {
         fontSize: 9,

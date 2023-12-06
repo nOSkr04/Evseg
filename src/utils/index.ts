@@ -3,7 +3,7 @@ import { HttpRequest as BaseHttpRequest,HttpHandler } from "../helper";
 import { authLogout } from "../store/auth-slice";
 
 export class HttpRequest extends BaseHttpRequest {
-  uri = "http://192.168.1.65:8001";
+  uri = "http://192.168.1.8:8001";
   // uri = "http://192.168.1.62:3000";
   // uri = "http://159.223.69.222";
 

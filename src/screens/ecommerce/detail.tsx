@@ -39,7 +39,6 @@ const ProductDetail = memo(({ route }: Props) => {
     }
   }
 
-
   const addCart = useCallback(async () => {
     const createData = {
       quantity: count,
@@ -76,16 +75,17 @@ const ProductDetail = memo(({ route }: Props) => {
   if (!data) {
     return null
   }
+  console.log(data)
 
   return (
     <>
-      <AppBar leading title={data?.name} />
-      <ScrollView style={styles.root}>
+      <AppBar leading title={"Барааны дэлгэрэнгүй"} />
+      <ScrollView style={styles.root} showsVerticalScrollIndicator={false}>
         <View>
           <Carousel data={data.images} />
           <ScrollView horizontal={true} style={styles.horizontalContainer}>
             {
-              data.images.map((item, index) => <TouchableOpacity key={index} onPress={() => setSelectImage(item._id)}>
+              data.images.map((item, index) => <TouchableOpacity key={index} onPress={() => setSelectImage(item._id)} style={styles.image}>
                 <Image source={item.url} placeholder={item.blurHash} style={[styles.mainProduct, imageBorder(item._id)]} />
               </TouchableOpacity>)
             }
@@ -93,10 +93,10 @@ const ProductDetail = memo(({ route }: Props) => {
           <View style={styles.container}>
             <View>
               <Text style={styles.title}>
-                {data.name}
+                {data?.name}
               </Text>
               <Text style={styles.price}>
-                {data.category.name}
+                {data.category?.name}
               </Text>
             </View>
             <Pressable >
@@ -106,13 +106,13 @@ const ProductDetail = memo(({ route }: Props) => {
           <View style={styles.detail}>
             <Text style={styles.detailTitle}>Хэмжээ</Text>
             <View style={styles.sizeRoot}>
-              {data.size.map((item: IProduct) => {
+              {/* {data.size.map((item: IProduct) => {
                 return (
                   <Pressable style={item.name === selectSize ? styles.selectedSize : styles.sizeContainer} key={item.name} onPress={() => setSelectSize(item.name)}>
                     <Text style={item.name === selectSize ? styles.selectedText : styles.sizeTitle}>{item.name.toUpperCase()}</Text>
                   </Pressable>
                 )
-              })}
+              })} */}
             </View>
           </View>
         </View>
@@ -161,6 +161,9 @@ export { ProductDetail }
 const styles = StyleSheet.create({
   quantityText: {
     fontFamily: 'MonSemiBold'
+  },
+  image:{
+    marginRight: 10,
   },
   mainProduct: {
     paddingHorizontal: 15,
